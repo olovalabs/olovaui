@@ -1,0 +1,68 @@
+export const metadata = {
+  title: "Code Block Natural - Olova UI",
+  description: "A beautiful, tabbed code block component for displaying package manager commands with copy functionality.",
+  keywords: [
+    "code block natural",
+    "command block",
+    "package manager tabs",
+    "react code component",
+    "olova ui",
+    "copy functionality"
+  ],
+  openGraph: {
+    title: "Code Block Natural - Olova UI",
+    description: "A beautiful, tabbed code block component for displaying package manager commands.",
+    type: "article",
+    url: "/docs/code-block/code-block-natural",
+  },
+  alternates: {
+    canonical: "/docs/code-block/code-block-natural",
+  },
+};
+
+import CodeBlockNatural from "./code-block-natural";
+
+# Code Block Natural
+Code Block Natural is a beautiful, tabbed code block component for displaying package manager commands with copy functionality.
+
+
+<Tabs defaultValue="preview" className="">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <ComponentRenderer component={<CodeBlockNatural />} reTrigger={true} />
+  </TabsContent>
+  <TabsContent value="code">
+    <CodeBlock filePath="src/app/docs/code-block/code-block-natural/code-block-command.tsx" />
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import { CodeBlockCommand } from "@/components/code-block-command";
+
+export function CodeBlockNatural() {
+  return (
+    <CodeBlockCommand
+      pnpm="pnpm dlx shadcn add @ncdai/code-block-command"
+      yarn="yarn shadcn add @ncdai/code-block-command"
+      npm="npx shadcn add @ncdai/code-block-command"
+      bun="bunx --bun shadcn add @ncdai/code-block-command"
+    />
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `pnpm` | `string` | Command for pnpm package manager |
+| `yarn` | `string` | Command for yarn package manager |
+| `npm` | `string` | Command for npm package manager |
+| `bun` | `string` | Command for bun package manager |
+
+

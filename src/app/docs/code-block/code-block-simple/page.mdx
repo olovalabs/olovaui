@@ -1,0 +1,63 @@
+export const metadata = {
+  title: "Code Block Simple - Olova UI",
+  description:
+    "A clean, tabbed code block for package manager commands with a copy-to-clipboard button.",
+  keywords: [
+    "code block simple",
+    "tabbed code block",
+    "package manager commands",
+    "copy to clipboard",
+    "react code snippet",
+    "olova ui"
+  ],
+  openGraph: {
+    title: "Code Block Simple - Olova UI",
+    description:
+      "A clean, tabbed code block for package manager commands with a copy-to-clipboard button.",
+    type: "article",
+    url: "/docs/code-block/code-block-simple",
+  },
+  alternates: {
+    canonical: "/docs/code-block/code-block-simple",
+  },
+};
+
+import CodeBlockSimpleView from "./code-block-simple-view";
+
+# Code Block Simple
+
+A clean, tabbed code block for package manager commands with a copy-to-clipboard button.
+
+<Tabs defaultValue="preview" className="">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <ComponentRenderer component={<CodeBlockSimpleView />} reTrigger={true} />
+  </TabsContent>
+  <TabsContent value="code">
+    <CodeBlock filePath="src/app/docs/code-block/code-block-simple/code-block-simple.tsx" />
+  </TabsContent>
+</Tabs>
+
+## Usage
+
+```tsx
+import { SmCodeBlockCommand } from "@/components/sm-code-block-command";
+
+export default function Example() {
+  return (
+    <SmCodeBlockCommand
+      pnpm="pnpm dlx shadcn add @olovaui/code-block-command"
+      yarn="yarn shadcn add @olovaui/code-block-command"
+      npm="npx shadcn add @olovaui/code-block-command"
+      bun="bunx --bun shadcn add @olovaui/code-block-command"
+    />
+  );
+}
+```
+
+## Notes
+
+- Pass in different command strings to update the tab content.
