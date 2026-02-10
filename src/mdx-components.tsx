@@ -14,7 +14,7 @@ import { Cli } from "./components/layout/cli";
 import { PropsTable } from "./components/layout/props-table";
 import { Table, StatusBadge } from "./components/ui/table";
 import { HideTOC } from "./components/layout/hide-toc";
-import { AIButton } from "./components/layout/ai-assistant-button";
+import { AIButtonLazy as AIButton } from "./components/layout/ai-assistant-button.lazy";
 import { Alert, Collapsible } from "@/components/layout/mdx-interactive";
 import {
   PackageManagerTabs as PMTabs,

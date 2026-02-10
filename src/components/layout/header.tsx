@@ -6,14 +6,20 @@ import { ThemeSwitcher } from "./theme";
 
 import Logo from "@/assets/olova.png";
 import { Linkedin, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import dynamic from "next/dynamic";
 import NextImage from "next/image";
-import { SidebarMobile } from "./sidebar-mobile";
+const SidebarMobile = dynamic(
+  () => import("./sidebar-mobile").then((mod) => mod.SidebarMobile),
+  { ssr: false }
+);
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/navigation";
 import { componentsNavigation } from "@/constants/components-navigation";
 
-import { SearchModal } from "./search-modal";
+const SearchModal = dynamic(
+  () => import("./search-modal").then((mod) => mod.SearchModal),
+  { ssr: false }
+);
 import SupportAlertBanner from "./support-alert-banner";
 
 const GitHubStarBadge = ({ repo }: { repo: string }) => {
@@ -130,23 +136,17 @@ const Header = () => {
   return (
     <>
       <SupportAlertBanner />
-      <AnimatePresence>
-        {sidebarOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 z-30 bg-black/50 md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      <div
+        className={`fixed inset-0 z-30 bg-black/50 transition-opacity duration-200 md:hidden ${
+          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setSidebarOpen(false)}
+      />
 
-      <motion.div
-        initial={{ x: "-100%" }}
-        animate={{ x: sidebarOpen ? "0%" : "-100%" }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 left-0 z-40 h-full w-4/5 bg-zinc-50 dark:bg-zinc-950 md:hidden"
+      <div
+        className={`fixed top-0 left-0 z-40 h-full w-4/5 bg-zinc-50 dark:bg-zinc-950 md:hidden transition-transform duration-200 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div className="w-full px-6 py-4 flex items-center justify-between border-b border-gray-200 dark:border-zinc-800">
           <Link href="/" className="flex items-center">
@@ -161,12 +161,14 @@ const Header = () => {
             <X className="size-5" />
           </button>
         </div>
-        <SidebarMobile
-          onClose={() => setSidebarOpen(false)}
-          items={sidebarItems}
-          footerLink={sidebarFooterLink}
-        />
-      </motion.div>
+        {sidebarOpen ? (
+          <SidebarMobile
+            onClose={() => setSidebarOpen(false)}
+            items={sidebarItems}
+            footerLink={sidebarFooterLink}
+          />
+        ) : null}
+      </div>
 
       <div className="w-full mx-auto max-w-[1536px] sticky top-0 z-[9998] bg-transparent backdrop-blur-lg border-b border-gray-200 dark:border-zinc-800 border-l border-r border-neutral-200 px-6">
         <header className="h-14 px-4 md:px-0 flex items-center justify-between">
@@ -260,7 +262,9 @@ const Header = () => {
         </header>
       </div>
 
-      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      {searchOpen ? (
+        <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      ) : null}
     </>
   );
 };

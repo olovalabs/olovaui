@@ -1,11 +1,17 @@
 "use client";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import { useSyncExternalStore } from "react";
 
 export const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
-  const isDark = theme === "dark";
+  const isDark = mounted && theme === "dark";
 
   const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
@@ -15,9 +21,9 @@ export const ThemeSwitcher = () => {
     <button
       onClick={toggleTheme}
       className="flex items-center rounded-md p-2 text-sm transition-colors text-zinc-950 dark:text-zinc-50 cursor-pointer"
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={mounted ? (isDark ? "Switch to light mode" : "Switch to dark mode") : "Toggle theme"}
     >
-      {isDark ? <Sun size={16} /> : <Moon size={16} />}
+      {mounted ? (isDark ? <Sun size={16} /> : <Moon size={16} />) : null}
     </button>
   );
 };
