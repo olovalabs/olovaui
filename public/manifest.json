@@ -30,22 +30,6 @@
       "purpose": "any"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshot-desktop.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "olova ui Component Library Desktop View"
-    },
-    {
-      "src": "/screenshot-mobile.png",
-      "sizes": "375x667",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "olova ui Component Library Mobile View"
-    }
-  ],
   "shortcuts": [
     {
       "name": "Documentation",
@@ -55,7 +39,7 @@
       "icons": [
         {
           "src": "/icon-docs.png",
-          "sizes": "96x96",
+          "sizes": "192x192",
           "type": "image/png"
         }
       ]
@@ -68,7 +52,7 @@
       "icons": [
         {
           "src": "/icon-components.png",
-          "sizes": "96x96",
+          "sizes": "192x192",
           "type": "image/png"
         }
       ]
@@ -81,7 +65,7 @@
       "icons": [
         {
           "src": "/icon-tools.png",
-          "sizes": "96x96",
+          "sizes": "192x192",
           "type": "image/png"
         }
       ]

@@ -73,7 +73,7 @@ export default function App() {
           <Link href="/docs" className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full border border-neutral-200 dark:border-white/10 bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 hover:border-green-500/30 transition-all duration-300 group">
             <span className="text-sm font-medium text-neutral-900 dark:text-white">Introducing OlovaUI Beta</span>
             <div className="w-px h-3.5 bg-neutral-300 dark:bg-white/20 mx-1"></div>
-            <span className="text-sm text-gray-400 flex items-center gap-1 group-hover:text-green-400 transition-colors">
+            <span className="text-sm text-zinc-600 dark:text-zinc-300 flex items-center gap-1 group-hover:text-green-400 transition-colors">
               Get started <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
             </span>
           </Link>
@@ -81,7 +81,7 @@ export default function App() {
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-900 to-neutral-600 dark:from-neutral-50 dark:to-neutral-400 bg-opacity-50">
             Pre-built UI Library
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
+          <p className="text-zinc-700 dark:text-zinc-300 text-lg leading-relaxed">
             Accelerate your development with production-ready components.<br className="hidden md:inline" />
             Beautifully crafted, accessible, and fully customizable.
           </p>
@@ -115,7 +115,7 @@ export default function App() {
             {/* Text Info */}
             <div className="mt-5">
               <h3 className="text-neutral-900 dark:text-white font-semibold text-lg mb-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">Quickstart</h3>
-              <p className="text-gray-600 dark:text-gray-500 text-sm leading-relaxed">
+              <p className="text-zinc-700 dark:text-zinc-300 text-sm leading-relaxed">
                 Deploy your first docs site in minutes with our step-by-step guide
               </p>
             </div>
@@ -155,7 +155,7 @@ export default function App() {
             {/* Text Info */}
             <div className="mt-5">
               <h3 className="text-neutral-900 dark:text-white font-semibold text-lg mb-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">CLI installation</h3>
-              <p className="text-gray-600 dark:text-gray-500 text-sm leading-relaxed">
+              <p className="text-zinc-700 dark:text-zinc-300 text-sm leading-relaxed">
                 Install the CLI to preview and develop your docs locally
               </p>
             </div>

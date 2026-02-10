@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
 
   compress: true,
   poweredByHeader: false,
+  productionBrowserSourceMaps: true,
 
   images: {
     unoptimized: true,

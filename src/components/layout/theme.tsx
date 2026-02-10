@@ -15,6 +15,7 @@ export const ThemeSwitcher = () => {
     <button
       onClick={toggleTheme}
       className="flex items-center rounded-md p-2 text-sm transition-colors text-zinc-950 dark:text-zinc-50 cursor-pointer"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
       {isDark ? <Sun size={16} /> : <Moon size={16} />}
     </button>

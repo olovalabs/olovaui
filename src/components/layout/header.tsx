@@ -156,6 +156,7 @@ const Header = () => {
           <button
             onClick={() => setSidebarOpen(false)}
             className="text-zinc-900 dark:text-zinc-100"
+            aria-label="Close menu"
           >
             <X className="size-5" />
           </button>
@@ -175,6 +176,7 @@ const Header = () => {
                 <button
                   onClick={toggleSidebar}
                   className="flex flex-col items-start gap-1 md:hidden"
+                  aria-label="Open menu"
                 >
                   <span className="w-5 h-0.5 bg-zinc-900 dark:bg-zinc-100 rounded-full" />
                   <span className="w-3 h-0.5 bg-zinc-900 dark:bg-zinc-100 rounded-full" />
