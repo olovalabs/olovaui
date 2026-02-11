@@ -68,6 +68,11 @@ export const navigation: NavigationItem[] = [
         label: "Code Block Natural",
         href: "/docs/code-block/code-block-natural",
       },
+      {
+        label: "Code Block Select",
+        href: "/docs/code-block/code-block-select",
+        badge: "New",
+      },
     ],
   },
   {
