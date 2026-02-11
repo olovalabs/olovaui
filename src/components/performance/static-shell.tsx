@@ -1,4 +1,4 @@
-import { Footer } from '@/app/(landing)/components/footer';
+
 import Header from '@/components/layout/header';
 import { cache } from 'react';
 
@@ -8,7 +8,4 @@ import { cache } from 'react';
  */
 export const StaticHeader = cache(() => <Header />);
 
-/**
- * Cached version of the Footer component for use in static shells.
- */
-export const StaticFooter = cache(() => <Footer />);
+
