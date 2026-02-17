@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <MetaTags />
-        <ResourcePreloader images={[]} />
+        <ResourcePreloader />
       </head>
       <body
         className={`${inter.className} ${geistMono.variable} ${geistSans.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100`}
