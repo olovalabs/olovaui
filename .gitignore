@@ -1,74 +1,57 @@
-```gitignore
+```
 # Dependencies
 node_modules/
-.julia/
-zig*/
-target/
-.gradle/
-__pycache__/
-*.egg-info/
-.cargo/
-.pip/
 
 # Build outputs
 dist/
 build/
+.next/
 out/
-coverage/
-htmlcov/
-*.so
-*.dylib
-*.dll
-*.exe
-*.o
-*.obj
-*.a
-*.lib
-*.out
 
-# Python specific
+# Python
+__pycache__/
 *.pyc
 *.pyo
 *.pyd
-__pycache__/
-.pytest_cache/
-.mypy_cache/
-.coverage
-coverage.xml
-
-# Node.js specific
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+*.py~
+.Python
+env/
+venv/
+.venv/
+.ENV
+.env
+.env.local
 
 # Logs
 *.log
-*.tmp
 
-# Environment variables
-.env
-.env.local
-.env.*
-!.env.example
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# IDE
+# Editor files
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Testing
-.nyc_output/
+# Coverage
 coverage/
+htmlcov/
+.coverage
 
-# Documentation
-docs/_build/
+# Temporary files
+*.tmp
+*.temp
+*.bak
 
-# Compression
+# Compressed files
 *.zip
 *.gz
 *.tar

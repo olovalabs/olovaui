@@ -1,6 +1,6 @@
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
-import { geistMono } from '@/assets/fonts';
+import { geistMono, geistSans } from '@/assets/fonts';
 import { PackageManagerProvider } from '@/context/package-manager-context';
 import { Inter } from 'next/font/google';
 import { ResourcePreloader } from '@/components/performance/resource-preloader';
@@ -29,7 +29,7 @@ export default function RootLayout({
         <ResourcePreloader images={[]} />
       </head>
       <body
-        className={`${inter.className} ${geistMono.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100`}
+        className={`${inter.className} ${geistMono.variable} ${geistSans.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
           <PackageManagerProvider>
