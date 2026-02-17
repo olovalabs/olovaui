@@ -23,51 +23,9 @@ const SearchModal = dynamic(
 import SupportAlertBanner from "./support-alert-banner";
 
 const GitHubStarBadge = ({ repo }: { repo: string }) => {
-  const [stars, setStars] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchStars = async () => {
-      try {
-        const now = Date.now();
-        const cacheKey = `github-stars-${repo}`;
-        const cacheTimeKey = `github-stars-time-${repo}`;
-
-        if (typeof window !== "undefined") {
-          const cached = localStorage.getItem(cacheKey);
-          const cacheTime = localStorage.getItem(cacheTimeKey);
-
-          if (cached && cacheTime && now - parseInt(cacheTime) < 3600000) {
-            setStars(parseInt(cached));
-            setLoading(false);
-            return;
-          }
-        }
-
-        const response = await fetch(`https://api.github.com/repos/${repo}`);
-
-        if (response.ok) {
-          const data = await response.json();
-          setStars(data.stargazers_count);
-
-          if (typeof window !== "undefined") {
-            localStorage.setItem(cacheKey, data.stargazers_count.toString());
-            localStorage.setItem(cacheTimeKey, now.toString());
-          }
-        } else {
-          console.error("Failed to fetch stars, status:", response.status);
-          setStars(0);
-        }
-      } catch (error) {
-        console.error("Failed to fetch GitHub stars:", error);
-        setStars(0);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStars();
-  }, [repo]);
+  // Using a static placeholder value for static export
+  // This value should be updated via build-time script
+  const staticStars = 0; // This will be replaced with actual star count during build
 
   const formatStars = (count: number) => {
     if (count >= 1000) {
@@ -75,23 +33,6 @@ const GitHubStarBadge = ({ repo }: { repo: string }) => {
     }
     return count.toString();
   };
-
-  if (loading) {
-    return (
-      <Link
-        href="https://github.com/olovaui/olovaui"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 px-3 h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors duration-200"
-        aria-label="GitHub"
-      >
-        <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400 animate-pulse">
-          ...
-        </span>
-        <GitHubIcon className="h-4 w-4 fill-zinc-950 dark:fill-zinc-50" />
-      </Link>
-    );
-  }
 
   return (
     <Link
@@ -102,7 +43,7 @@ const GitHubStarBadge = ({ repo }: { repo: string }) => {
       aria-label="GitHub"
     >
       <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
-        {stars !== null ? formatStars(stars) : "N/A"}
+        {formatStars(staticStars)}
       </span>
       <GitHubIcon className="h-4 w-4 fill-zinc-950 dark:fill-zinc-50" />
     </Link>
