@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "tsx ./scripts/build-docs.ts && tsx ./scripts/generate-images.ts && next build --turbopack && tsx ./scripts/post-export.ts",
+    "build": "tsx ./scripts/build-docs.ts && next build --turbopack && tsx ./scripts/post-export.ts",
     "build:analyze": "set ANALYZE=true && next build --turbopack",
     "start": "next start",
     "preview": "npx serve out",
