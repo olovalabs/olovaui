@@ -1,4 +1,4 @@
-import { motion, Transition, Easing } from 'motion/react';
+import { motion, Transition, Easing, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState, useMemo, ReactNode } from 'react';
 
 type AnimationSnapshot = Record<string, string | number>;
@@ -60,6 +60,7 @@ const BlurText = ({
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -67,7 +68,7 @@ const BlurText = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setInView(true);
+          setInView(!prefersReducedMotion); // Don't animate if prefers reduced motion
           observer.unobserve(ref.current!);
         }
       },
@@ -76,7 +77,7 @@ const BlurText = ({
 
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [threshold, rootMargin]);
+  }, [threshold, rootMargin, prefersReducedMotion]);
 
   const defaultFrom: AnimationSnapshot = useMemo(
     () =>
@@ -113,10 +114,10 @@ const BlurText = ({
         const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 
         const spanTransition: Transition = {
-          duration: totalDuration,
-          times,
-          delay: (index * delay) / 1000,
-          ease: easing
+          duration: prefersReducedMotion ? 0 : totalDuration,
+          times: prefersReducedMotion ? [0, 1] : times,
+          delay: prefersReducedMotion ? 0 : (index * delay) / 1000,
+          ease: prefersReducedMotion ? "linear" : easing
         };
 
         return (

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Search, Command, FileText, Home, Settings } from "lucide-react";
 import { getAllSearchableItems, searchItems, SearchableItem } from "@/lib/search-registry";
 import Link from "next/link";
@@ -27,6 +27,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [allItems] = useState(() => getAllSearchableItems());
+  const prefersReducedMotion = useReducedMotion();
 
   const filteredItems = React.useMemo(() => {
     if (query.trim()) {
@@ -117,7 +118,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             initial={{ opacity: 0, scale: 0.95, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: prefersReducedMotion ? "linear" : "easeOut" }}
             className="w-full max-w-2xl bg-white/80 dark:bg-black/80 backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 dark:border-zinc-800/50 overflow-hidden"
           >
             {/* Search Input */}

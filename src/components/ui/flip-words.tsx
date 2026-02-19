@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const FlipWords = ({
@@ -12,6 +12,7 @@ export const FlipWords = ({
   duration?: number;
   className?: string;
 }) => {
+  const prefersReducedMotion = useReducedMotion();
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
@@ -22,11 +23,11 @@ export const FlipWords = ({
   }, [currentWord, words]);
 
   useEffect(() => {
-    if (!isAnimating)
+    if (!isAnimating && !prefersReducedMotion)
       setTimeout(() => {
         startAnimation();
       }, duration);
-  }, [isAnimating, duration, startAnimation]);
+  }, [isAnimating, duration, startAnimation, prefersReducedMotion]);
 
   return (
     <AnimatePresence
@@ -48,6 +49,7 @@ export const FlipWords = ({
           stiffness: 150,
           damping: 15,
           mass: 0.8,
+          duration: prefersReducedMotion ? 0 : undefined,
         }}
         exit={{
           opacity: 0,
@@ -60,7 +62,7 @@ export const FlipWords = ({
             type: "spring",
             stiffness: 200,
             damping: 20,
-            duration: 0.4,
+            duration: prefersReducedMotion ? 0 : 0.4,
           },
         }}
         className={cn(
@@ -76,7 +78,7 @@ export const FlipWords = ({
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
               delay: wordIndex * 0.3,
-              duration: 0.4,
+              duration: prefersReducedMotion ? 0 : 0.4,
               type: "spring",
               stiffness: 120,
               damping: 12,
@@ -89,12 +91,12 @@ export const FlipWords = ({
                 initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{
-                  delay: wordIndex * 0.3 + letterIndex * 0.05,
-                  duration: 0.3,
+                  delay: prefersReducedMotion ? 0 : wordIndex * 0.3 + letterIndex * 0.05,
+                  duration: prefersReducedMotion ? 0 : 0.3,
                   type: "spring",
                   stiffness: 140,
                   damping: 14,
-                  ease: [0.25, 0.46, 0.45, 0.94],
+                  ease: prefersReducedMotion ? undefined : [0.25, 0.46, 0.45, 0.94],
                 }}
                 className="inline-block"
               >
