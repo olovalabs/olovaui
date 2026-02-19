@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion, MotionStyle, Transition } from "motion/react";
+import { useReducedMotion } from "framer-motion";
 import { forwardRef, useMemo } from "react";
 
 interface BorderBeamProps {
@@ -88,6 +89,7 @@ export const BorderBeam = forwardRef<HTMLDivElement, BorderBeamProps>(
     },
     ref,
   ) => {
+    const prefersReducedMotion = useReducedMotion();
     // Memoize the offset path to prevent unnecessary recalculations
     const offsetPath = useMemo(() => {
       const radius = borderRadius === "auto" ? size : borderRadius;
@@ -105,12 +107,12 @@ export const BorderBeam = forwardRef<HTMLDivElement, BorderBeamProps>(
 
     // Memoize the transition configuration
     const transitionConfig = useMemo(() => ({
-      repeat: paused ? 0 : Infinity,
+      repeat: paused || prefersReducedMotion ? 0 : Infinity,
       ease: "linear" as const,
-      duration,
+      duration: prefersReducedMotion ? 0 : duration,
       delay: -delay,
       ...transition,
-    }), [paused, duration, delay, transition]);
+    }), [paused, prefersReducedMotion, duration, delay, transition]);
 
     return (
       <div

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 export type TabItem = {
   id: string | number;
@@ -16,11 +16,12 @@ export interface TabsProps {
 
 export default function Tabs({ items = [], className = '' }: TabsProps) {
   const [activeTab, setActiveTab] = useState<string | number>(items[0]?.id ?? 1);
+  const prefersReducedMotion = useReducedMotion();
 
   const tabVariants = {
-    hidden: { opacity: 0, y: 10 },
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 10 },
     visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -10 }
+    exit: { opacity: 0, y: prefersReducedMotion ? 0 : -10 }
   };
 
   const indicatorVariants = {
@@ -33,6 +34,9 @@ export default function Tabs({ items = [], className = '' }: TabsProps) {
     visible: { opacity: 1 },
     exit: { opacity: 0 }
   };
+
+  const transition = prefersReducedMotion ? { duration: 0 } : { duration: 0.3, ease: "easeOut" };
+  const contentTransition = prefersReducedMotion ? { duration: 0 } : { duration: 0.2, ease: "easeInOut" };
 
   return (
     <motion.div 
@@ -52,8 +56,8 @@ export default function Tabs({ items = [], className = '' }: TabsProps) {
                 ? 'text-slate-800 dark:text-slate-200'
                 : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300'
             }`}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: prefersReducedMotion ? 1 : 1.02 }}
+            whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
             aria-selected={activeTab === tab.id}
             role='tab'
           >
@@ -65,7 +69,7 @@ export default function Tabs({ items = [], className = '' }: TabsProps) {
                 initial="hidden"
                 animate="visible"
                 variants={indicatorVariants}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                transition={transition}
               />
             )}
           </motion.button>
@@ -83,7 +87,7 @@ export default function Tabs({ items = [], className = '' }: TabsProps) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
+            transition={contentTransition}
           >
             {items.find((tab) => tab.id === activeTab)?.content || items[0]?.content}
           </motion.div>

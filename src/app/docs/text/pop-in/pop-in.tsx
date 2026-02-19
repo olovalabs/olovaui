@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState, ReactNode } from 'react';
 
 interface PopInProps {
@@ -24,6 +24,7 @@ const PopIn = ({
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -31,7 +32,7 @@ const PopIn = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setInView(true);
+          setInView(!prefersReducedMotion); // Don't animate if prefers reduced motion
           observer.unobserve(ref.current!);
         }
       },
@@ -40,7 +41,7 @@ const PopIn = ({
 
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [threshold, rootMargin]);
+  }, [threshold, rootMargin, prefersReducedMotion]);
 
   return (
     <p ref={ref} className={`${className} flex flex-wrap gap-0 leading-normal`}>
@@ -51,9 +52,9 @@ const PopIn = ({
           initial={{ scale: 0, opacity: 0 }}
           animate={inView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
           transition={{
-            duration: 0.5,
-            delay: (index * delay) / 1000,
-            ease: [0.34, 1.56, 0.64, 1]
+            duration: prefersReducedMotion ? 0 : 0.5,
+            delay: prefersReducedMotion ? 0 : (index * delay) / 1000,
+            ease: prefersReducedMotion ? "linear" : [0.34, 1.56, 0.64, 1]
           }}
           onAnimationComplete={
             index === elements.length - 1 ? onAnimationComplete : undefined
