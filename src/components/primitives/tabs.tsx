@@ -35,8 +35,8 @@ export default function Tabs({ items = [], className = '' }: TabsProps) {
     exit: { opacity: 0 }
   };
 
-  const transition = prefersReducedMotion ? { duration: 0 } : { duration: 0.3, ease: "easeOut" };
-  const contentTransition = prefersReducedMotion ? { duration: 0 } : { duration: 0.2, ease: "easeInOut" };
+  const transition = prefersReducedMotion ? { duration: 0 } : { duration: 0.3, ease: [0.34, 1.56, 0.64, 1] as const };
+  const contentTransition = prefersReducedMotion ? { duration: 0 } : { duration: 0.2, ease: [0.4, 0, 0.2, 1] as const };
 
   return (
     <motion.div 
