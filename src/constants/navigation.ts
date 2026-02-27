@@ -42,6 +42,11 @@ export const navigation: NavigationItem[] = [
     label: "Slider",
     children: [
       {
+        label: "3D Carousel",
+        href: "/docs/slider/3d-carousel",
+        badge: "New",
+      },
+      {
         label: "Memories Card",
         href: "/docs/slider/memories-card",
       },
