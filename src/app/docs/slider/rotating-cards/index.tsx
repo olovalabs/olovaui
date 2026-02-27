@@ -67,7 +67,7 @@ const CARDS_DATA: RotatingCard[] = [
 
 export function RotatingCardsView() {
     return (
-        <div className="relative h-[600px] w-full flex justify-center items-center overflow-hidden bg-black rounded-2xl border border-white/5">
+        <div className="relative h-[600px] w-full flex justify-center items-center overflow-hidden  rounded-2xl border border-white/5">
             <div
                 className="absolute bottom-[-200px] left-1/2 -translate-x-1/2 w-[80vw] h-[400px] rounded-full pointer-events-none z-0 opacity-20"
                 style={{
