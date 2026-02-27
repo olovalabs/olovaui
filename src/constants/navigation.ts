@@ -47,6 +47,11 @@ export const navigation: NavigationItem[] = [
         badge: "New",
       },
       {
+        label: "Rotating Cards",
+        href: "/docs/slider/rotating-cards",
+        badge: "New",
+      },
+      {
         label: "Memories Card",
         href: "/docs/slider/memories-card",
       },
