@@ -2,7 +2,7 @@
 
 import { RotatingCards, RotatingCard } from './rotating-cards';
 
-const BASE_CARDS = [
+const BASE_CARDS: RotatingCard[] = [
     {
       id: 1,
       content: "1",
@@ -50,12 +50,18 @@ const BASE_CARDS = [
     },
 ];
 
-const CARDS_DATA = [
+// Tripling the cards to fill the radius and decrease gaps
+const CARDS_DATA: RotatingCard[] = [
     ...BASE_CARDS,
     ...BASE_CARDS.map((c) => ({
       ...c,
-      id: c.id + 9,
-      content: String(Number(c.content) + 9),
+      id: (typeof c.id === 'number' ? c.id + 9 : `${c.id}-2`),
+      content: typeof c.content === 'string' ? String(Number(c.content) + 9) : c.content,
+    })),
+    ...BASE_CARDS.map((c) => ({
+      ...c,
+      id: (typeof c.id === 'number' ? c.id + 18 : `${c.id}-3`),
+      content: typeof c.content === 'string' ? String(Number(c.content) + 18) : c.content,
     })),
 ];
 
@@ -72,8 +78,8 @@ export function RotatingCardsView() {
 
             <RotatingCards
                 cards={CARDS_DATA}
-                radius={900}
-                duration={50}
+                radius={750}
+                duration={60}
                 cardWidth={200}
                 cardHeight={280}
                 draggable={true}
@@ -81,7 +87,7 @@ export function RotatingCardsView() {
                 pauseOnHover={true}
                 autoPlay={true}
                 className="w-full h-full z-10"
-                centerClassName="bottom-[-600px] left-1/2"
+                centerClassName="bottom-[-500px] left-1/2"
             />
         </div>
     );

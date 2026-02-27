@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion, useMotionValue, useAnimationFrame, PanInfo } from "framer-motion";
 
 export interface RotatingCard {
