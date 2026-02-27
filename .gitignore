@@ -78,3 +78,12 @@ __pycache__/
 *.tar.xz
 *.tar.zst
 ```
+
+# Next.js
+.next/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
