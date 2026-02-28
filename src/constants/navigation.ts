@@ -24,6 +24,11 @@ export const navigation: NavigationItem[] = [
     label: "Text Animation",
     children: [
       {
+        label: "Flip Link",
+        href: "/docs/text/flip-link",
+        badge: "New",
+      },
+      {
         label: "Slide In View",
         href: "/docs/text/slide-in-text",
       },
