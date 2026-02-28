@@ -7,6 +7,8 @@ export interface FlipLinkProps {
   children: string;
   href?: string;
   hoverColor?: string;
+  /** Custom Tailwind font size classes (e.g., "text-2xl", "text-4xl") */
+  fontSize?: string;
   className?: string;
   duration?: number;
   stagger?: number;
@@ -16,6 +18,7 @@ export const FlipLink = ({
   children,
   href = "#",
   hoverColor = "hover:text-emerald-400",
+  fontSize = "text-5xl sm:text-7xl md:text-8xl lg:text-9xl",
   className = "",
   duration = 0.25,
   stagger = 0.025,
@@ -25,7 +28,7 @@ export const FlipLink = ({
       initial="initial"
       whileHover="hovered"
       href={href}
-      className={`relative block overflow-hidden whitespace-nowrap text-5xl font-black uppercase tracking-tighter sm:text-7xl md:text-8xl lg:text-9xl transition-colors duration-300 ${hoverColor} ${className}`}
+      className={`relative block overflow-hidden whitespace-nowrap font-black uppercase tracking-tighter transition-colors duration-300 ${fontSize} ${hoverColor} ${className}`}
       style={{
         lineHeight: 0.85,
       }}

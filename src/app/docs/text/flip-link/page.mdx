@@ -42,7 +42,7 @@ An interactive text animation component that flips each letter on hover with a s
 
 - **Staggered Animation**: Each letter animate sequentially for a professional feel.
 - **Blur Transition**: Smoothly fades letters with a Gaussian blur during the flip.
-- **Fully Customizable**: Control timing, stagger, and hover colors.
+- **Fully Customizable**: Control timing, stagger, font-size and hover colors.
 - **Accessible**: Renders as a standard anchor tag.
 
 ## Usage
@@ -55,6 +55,7 @@ export function Example() {
     <div className="bg-zinc-950 p-24">
       <FlipLink 
         href="#" 
+        fontSize="text-6xl md:text-8xl"
         hoverColor="hover:text-rose-500"
       >
         Projects
@@ -70,6 +71,7 @@ export function Example() {
 | --- | --- | --- | --- |
 | `children` | `string` | `undefined` | The text to be displayed and animated. |
 | `href` | `string` | `"#"` | The URL the link points to. |
+| `fontSize` | `string` | `"text-5xl sm:text-7xl md:text-8xl lg:text-9xl"` | Custom Tailwind font-size classes. |
 | `hoverColor` | `string` | `"hover:text-emerald-400"` | Tailwind hover text color class. |
 | `duration` | `number` | `0.25` | Duration of each letter's flip animation. |
 | `stagger` | `number` | `0.025` | Delay between each letter's animation. |
