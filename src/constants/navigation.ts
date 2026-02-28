@@ -105,4 +105,14 @@ export const navigation: NavigationItem[] = [
       },
     ],
   },
+  {
+    label: "Badge",
+    children: [
+      {
+        label: "The Badge",
+        href: "/docs/badge",
+        badge: "New",
+      },
+    ],
+  },
 ];
