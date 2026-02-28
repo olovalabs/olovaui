@@ -1,4 +1,4 @@
-import { HeroVideoDialog } from "./hero-video-player";
+import { HeroVideoDialog } from "@/components/ui/hero-video-player";
 
 export const HeroVideoPlayerView = () => {
   return (

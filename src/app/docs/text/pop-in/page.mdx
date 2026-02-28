@@ -1,26 +1,28 @@
 export const metadata = {
-  title: 'Pop In Text Animation | Olova UI',
-  description: 'A bouncy pop-in animation that reveals text with a spring effect. Perfect for playful and energetic text displays.',
+  title: "Pop In Text Animation | Olova UI",
+  description:
+    "A bouncy pop-in animation that reveals text with a spring effect. Perfect for playful and energetic text displays.",
   keywords: [
-    'React text animation',
-    'pop in effect',
-    'spring animation',
-    'bouncy text',
-    'Tailwind CSS text',
-    'Olova UI components'
+    "React text animation",
+    "pop in effect",
+    "spring animation",
+    "bouncy text",
+    "Tailwind CSS text",
+    "Olova UI components",
   ],
   openGraph: {
-    title: 'Pop In Text Animation - Olova UI',
-    description: 'Bouncy pop-in animation for React text components with spring effect.',
-    type: 'article',
-    url: '/docs/text/pop-in',
+    title: "Pop In Text Animation - Olova UI",
+    description:
+      "Bouncy pop-in animation for React text components with spring effect.",
+    type: "article",
+    url: "/docs/text/pop-in",
   },
   alternates: {
-    canonical: '/docs/text/pop-in',
+    canonical: "/docs/text/pop-in",
   },
 };
 
-import { PopInView } from "./index.tsx"
+import { PopInView } from "./index.tsx";
 
 # Pop In
 
@@ -44,17 +46,17 @@ A bouncy pop-in animation that reveals text with a spring effect. Characters or 
 Import and use the PopIn component with customizable animation properties.
 
 ```tsx
-"use client"
+"use client";
 
-import { PopIn } from '@/components/pop-in';
+import { PopIn } from "@/components/pop-in";
 
 export function PopInView() {
   return (
-    <div className='text-center'>
+    <div className="text-center">
       <PopIn
         delay={100}
         animateBy="words"
-        onAnimationComplete={() => console.log('Done!')}
+        onAnimationComplete={() => {}}
         className="text-2xl md:text-6xl mb-8"
       >
         Pop In Animation
