@@ -103,13 +103,18 @@ export const navigation: NavigationItem[] = [
         href: "/docs/shine-border",
         badge: "New",
       },
+      {
+        label: "Hero Video Player",
+        href: "/docs/hero-video-player",
+        badge: "New",
+      },
     ],
   },
   {
     label: "Badge",
     children: [
       {
-        label: "The Badge",
+        label: "Badge",
         href: "/docs/badge",
         badge: "New",
       },
