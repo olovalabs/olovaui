@@ -105,8 +105,6 @@ export function CodeBlockCommand({ pnpm, yarn, npm, bun }: CodeBlockCommandProps
     copyToClipboard();
   };
 
-  const ActiveIcon = managers[activeTab]?.icon || Terminal;
-
   return (
     <div className="w-full max-w-2xl rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50 shadow-sm">
       {/* Tabs Header */}
@@ -121,10 +119,9 @@ export function CodeBlockCommand({ pnpm, yarn, npm, bun }: CodeBlockCommandProps
                 className={`
                   relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors
                   hover:text-zinc-900 dark:hover:text-zinc-100
-                  ${
-                    activeTab === manager
-                      ? "text-zinc-900 dark:text-zinc-100 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-zinc-900 dark:after:bg-zinc-100"
-                      : "text-zinc-500 dark:text-zinc-400"
+                  ${activeTab === manager
+                    ? "text-zinc-900 dark:text-zinc-100 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-zinc-900 dark:after:bg-zinc-100"
+                    : "text-zinc-500 dark:text-zinc-400"
                   }
                 `}
               >
@@ -146,7 +143,7 @@ export function CodeBlockCommand({ pnpm, yarn, npm, bun }: CodeBlockCommandProps
                 {managers[activeTab]?.cmd}
               </span>
             </div>
-            
+
             <button
               onClick={handleCopy}
               className="ml-4 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-500 transition-all hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
@@ -162,9 +159,9 @@ export function CodeBlockCommand({ pnpm, yarn, npm, bun }: CodeBlockCommandProps
         </div>
         {copied && (
           <div className="mt-2 text-right">
-               <span className="text-xs text-zinc-400 dark:text-zinc-600">
-                Copied to clipboard!
-               </span>
+            <span className="text-xs text-zinc-400 dark:text-zinc-600">
+              Copied to clipboard!
+            </span>
           </div>
         )}
       </div>

@@ -1,447 +1,289 @@
 "use client";
+
 import { cn } from "@/lib/utils";
-import {
-    Download,
-    Expand,
-    ExternalLink,
-    Eye,
-    EyeOff,
-    Grid,
-    Maximize2,
-    Minimize2,
-    Monitor,
-    RotateCw,
-    Share,
-    Smartphone,
-    Tablet,
-    ZoomIn,
-    ZoomOut,
-} from "lucide-react";
 import { cloneElement, useCallback, useEffect, useRef, useState } from "react";
 
-type ViewportSize = "mobile" | "tablet" | "desktop" | "fullscreen";
-type Theme = "light" | "dark" | "auto";
-type BackgroundPattern = "none" | "dots" | "grid" | "lines" | "checkerboard";
+// --- Inline SVG Icons ---
+
+const MonitorIcon = ({ size = 16, className = "" }: { size?: number; className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect width="20" height="14" x="2" y="3" rx="2" />
+    <line x1="8" x2="16" y1="21" y2="21" />
+    <line x1="12" x2="12" y1="17" y2="21" />
+  </svg>
+);
+
+const TabletIcon = ({ size = 16, className = "" }: { size?: number; className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect width="16" height="20" x="4" y="2" rx="2" ry="2" />
+    <line x1="12" x2="12.01" y1="18" y2="18" />
+  </svg>
+);
+
+const SmartphoneIcon = ({ size = 16, className = "" }: { size?: number; className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+    <path d="M12 18h.01" />
+  </svg>
+);
+
+const RotateCcwIcon = ({ size = 16, className = "" }: { size?: number; className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+    <path d="M3 3v5h5" />
+  </svg>
+);
+
+const GripVerticalIcon = ({ size = 14, className = "" }: { size?: number; className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="9" cy="12" r="1" />
+    <circle cx="9" cy="5" r="1" />
+    <circle cx="9" cy="19" r="1" />
+    <circle cx="15" cy="12" r="1" />
+    <circle cx="15" cy="5" r="1" />
+    <circle cx="15" cy="19" r="1" />
+  </svg>
+);
+
+// --- Types ---
 
 type ComponentPreviewProps = {
   component: React.ReactElement;
   reTrigger?: boolean;
   className?: string;
-  componentName?: string;
-  showViewports?: boolean;
-  showBackgroundOptions?: boolean;
-  defaultViewport?: ViewportSize;
-  defaultTheme?: Theme;
-  defaultBackground?: BackgroundPattern;
-  allowFullscreen?: boolean;
-  showRuler?: boolean;
-  enableZoom?: boolean;
-  customActions?: Array<{
-    icon: React.ComponentType<{ size?: number; className?: string }>;
-    label: string;
-    onClick: () => void;
-  }>;
 };
 
-const viewportSizes = {
-  mobile: { width: 375, height: 667, icon: Smartphone },
-  tablet: { width: 768, height: 1024, icon: Tablet },
-  desktop: { width: 1200, height: 800, icon: Monitor },
-  fullscreen: { width: "100%", height: "100%", icon: Maximize2 },
-};
-
-const backgroundPatterns = {
-  none: "bg-white dark:bg-black",
-  dots: "bg-white dark:bg-black bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#374151_1px,transparent_1px)] [background-size:16px_16px]",
-  grid: "bg-white dark:bg-black bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#374151_1px,transparent_1px),linear-gradient(to_bottom,#374151_1px,transparent_1px)] [background-size:16px_16px]",
-  lines:
-    "bg-white dark:bg-black bg-[linear-gradient(45deg,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(45deg,#374151_1px,transparent_1px)] [background-size:8px_8px]",
-  checkerboard:
-    "bg-white dark:bg-black bg-[linear-gradient(45deg,#f3f4f6_25%,transparent_25%),linear-gradient(-45deg,#f3f4f6_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#f3f4f6_75%),linear-gradient(-45deg,transparent_75%,#f3f4f6_75%)] dark:bg-[linear-gradient(45deg,#1f2937_25%,transparent_25%),linear-gradient(-45deg,#1f2937_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#1f2937_75%),linear-gradient(-45deg,transparent_75%,#1f2937_75%)] [background-size:16px_16px] [background-position:0_0,0_8px,8px_-8px,-8px_0px]",
-};
+// --- Component ---
 
 export function ComponentRenderer({
   component,
-  className,
   reTrigger = false,
-  componentName,
-  showViewports = true,
-  showBackgroundOptions = true,
-  defaultViewport = "desktop",
-  defaultTheme = "auto",
-  defaultBackground = "none",
-  allowFullscreen = true,
-  showRuler = false,
-  enableZoom = false,
-  customActions = [],
+  className,
 }: ComponentPreviewProps) {
   const [key, setKey] = useState(0);
-  const [viewport, setViewport] = useState<ViewportSize>(defaultViewport);
-  const [background, setBackground] =
-    useState<BackgroundPattern>(defaultBackground);
-  const [theme] = useState<Theme>(defaultTheme);
-  const [isFullPage, setIsFullPage] = useState(false);
-  const [showControls, setShowControls] = useState(true);
-  const [zoom, setZoom] = useState(100);
+  const [width, setWidth] = useState<number | null>(null);
+  const [isDraggingState, setIsDraggingState] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(9999);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const previewRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const startWidth = useRef(0);
 
+  // Initialize width from container on mount and sync containerWidth
+  useEffect(() => {
+    if (containerRef.current) {
+      const w = containerRef.current.offsetWidth;
+      setContainerWidth(w);
+      setWidth(w);
+    }
+  }, []);
+
+  // Re-sync on window resize
+  useEffect(() => {
+    const onResize = () => {
+      if (containerRef.current && !isDragging.current) {
+        const cw = containerRef.current.offsetWidth;
+        setContainerWidth(cw);
+        setWidth((prev) => (prev && prev > cw ? cw : prev));
+      }
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Refresh handler
   const changeKey = useCallback(() => {
     setIsLoading(true);
     setKey((prev) => prev + 1);
-    // Simulate loading state
     setTimeout(() => setIsLoading(false), 300);
   }, []);
 
-  const handleFullPage = useCallback(() => {
-    setIsFullPage(!isFullPage);
-  }, [isFullPage]);
+  // Drag-to-resize logic
+  const onPointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      isDragging.current = true;
+      setIsDraggingState(true);
+      startX.current = e.clientX;
+      startWidth.current = width ?? 0;
+      document.body.style.cursor = "ew-resize";
+      document.body.style.userSelect = "none";
+      e.preventDefault();
+    },
+    [width],
+  );
 
-  const handleNewPage = useCallback(() => {
-    if (componentName) {
-      const standaloneUrl = `/standalone/${componentName}`;
-      window.open(standaloneUrl, "_blank");
-    }
-  }, [componentName]);
-
-  const handleShare = useCallback(async () => {
-    if (componentName && navigator.share) {
-      try {
-        await navigator.share({
-          title: `Component: ${componentName}`,
-          url: window.location.href,
-        });
-      } catch {
-        // Fallback to clipboard
-        navigator.clipboard.writeText(window.location.href);
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-    }
-  }, [componentName]);
-
-  const handleDownload = useCallback(() => {
-    // This would need to be implemented based on your specific needs
-    // Download functionality to be implemented
-  }, []);
-
-  const adjustZoom = useCallback((delta: number) => {
-    setZoom((prev) => Math.max(25, Math.min(200, prev + delta)));
-  }, []);
-
-  const resetZoom = useCallback(() => {
-    setZoom(100);
-  }, []);
-
-  // Handle keyboard shortcuts
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.metaKey || event.ctrlKey) {
-        switch (event.key) {
-          case "r":
-            event.preventDefault();
-            changeKey();
-            break;
-          case "f":
-            event.preventDefault();
-            handleFullPage();
-            break;
-
-          case "=":
-          case "+":
-            if (enableZoom) {
-              event.preventDefault();
-              adjustZoom(25);
-            }
-            break;
-          case "-":
-            if (enableZoom) {
-              event.preventDefault();
-              adjustZoom(-25);
-            }
-            break;
-          case "0":
-            if (enableZoom) {
-              event.preventDefault();
-              resetZoom();
-            }
-            break;
-        }
-      }
+    const onPointerMove = (e: PointerEvent) => {
+      if (!isDragging.current) return;
+      const delta = e.clientX - startX.current;
+      const maxWidth = containerRef.current
+        ? containerRef.current.offsetWidth
+        : window.innerWidth - 64;
+      const newWidth = Math.max(300, Math.min(startWidth.current + delta, maxWidth));
+      setWidth(newWidth);
     };
 
-    if (isFullPage) {
-      document.addEventListener("keydown", handleKeyDown);
-      return () => document.removeEventListener("keydown", handleKeyDown);
-    }
-  }, [
-    isFullPage,
-    changeKey,
-    handleFullPage,
-    adjustZoom,
-    resetZoom,
-    enableZoom,
-  ]);
+    const onPointerUp = () => {
+      if (!isDragging.current) return;
+      isDragging.current = false;
+      setIsDraggingState(false);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
 
-  const currentSize = viewportSizes[viewport];
-  const currentBg = backgroundPatterns[background];
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+    };
+  }, []);
+
+  // Viewport preset handlers
+  const setDesktop = useCallback(() => {
+    if (containerRef.current) setWidth(containerRef.current.offsetWidth);
+  }, []);
+
+  const setTablet = useCallback(() => {
+    if (containerRef.current) setWidth(Math.min(768, containerRef.current.offsetWidth));
+  }, []);
+
+  const setMobile = useCallback(() => {
+    if (containerRef.current) setWidth(Math.min(375, containerRef.current.offsetWidth));
+  }, []);
+
+  // Active viewport detection
+  const isDesktop = width !== null && width >= Math.min(1024, containerWidth);
+  const isTablet = width !== null && width >= 640 && width < 1024;
+  const isMobile = width !== null && width < 640;
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "group relative w-full rounded-lg not-prose",
-        isFullPage
-          ? "fixed inset-0 top-0 z-50 min-h-screen rounded-none overflow-hidden bg-background"
-          : "min-h-[350px]",
-        className,
-      )}
-    >
-      {/* Control Bar */}
-      {showControls && (
-        <div
-          className={cn(
-            "flex items-center justify-between gap-2 p-3 border-b bg-muted/30",
-            isFullPage ? "sticky top-0 z-50" : "",
-          )}
-        >
-          <div className="flex items-center gap-2">
-            {componentName && (
-              <span className="text-sm font-medium text-muted-foreground">
-                {componentName}
-              </span>
-            )}
-            {showRuler && viewport !== "fullscreen" && (
-              <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
-                {currentSize.width} × {currentSize.height}
-              </span>
-            )}
-            {enableZoom && zoom !== 100 && (
-              <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
-                {zoom}%
-              </span>
-            )}
-          </div>
+    <div className={cn("w-full not-prose", className)}>
+      {/* Toolbar */}
+      <div className="flex items-center justify-between px-4 py-3">
+        <div />
 
-          <div className="flex items-center gap-1">
-            {/* Viewport Controls */}
-            {showViewports && (
-              <div className="flex items-center gap-1 border rounded p-1">
-                {Object.entries(viewportSizes).map(([size, config]) => (
-                  <button
-                    key={size}
-                    onClick={() => setViewport(size as ViewportSize)}
-                    className={cn(
-                      "p-1.5 rounded hover:bg-muted transition-colors",
-                      viewport === size
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground",
-                    )}
-                    title={`${size} view`}
-                  >
-                    <config.icon size={16} />
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Background Options */}
-            {showBackgroundOptions && (
-              <div className="relative">
-                <button
-                  onClick={() => setShowDropdown(!showDropdown)}
-                  className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
-                  title="Background options"
-                >
-                  <Grid size={16} />
-                </button>
-                {showDropdown && (
-                  <div className="absolute top-full right-0 mt-1 bg-popover border rounded-md shadow-lg z-50 min-w-[120px]">
-                    {Object.keys(backgroundPatterns).map((pattern) => (
-                      <button
-                        key={pattern}
-                        onClick={() => {
-                          setBackground(pattern as BackgroundPattern);
-                          setShowDropdown(false);
-                        }}
-                        className={cn(
-                          "w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors capitalize",
-                          background === pattern ? "bg-muted" : "",
-                        )}
-                      >
-                        {pattern}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Zoom Controls */}
-            {enableZoom && (
-              <>
-                <button
-                  onClick={() => adjustZoom(-25)}
-                  className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
-                  title="Zoom out"
-                  disabled={zoom <= 25}
-                >
-                  <ZoomOut size={16} />
-                </button>
-                <button
-                  onClick={resetZoom}
-                  className="px-2 py-1 text-xs rounded hover:bg-muted transition-colors text-muted-foreground"
-                  title="Reset zoom"
-                >
-                  {zoom}%
-                </button>
-                <button
-                  onClick={() => adjustZoom(25)}
-                  className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
-                  title="Zoom in"
-                  disabled={zoom >= 200}
-                >
-                  <ZoomIn size={16} />
-                </button>
-              </>
-            )}
-
-            {/* Custom Actions */}
-            {customActions.map((action, index) => (
-              <button
-                key={index}
-                onClick={action.onClick}
-                className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
-                title={action.label}
-              >
-                <action.icon size={16} />
-              </button>
-            ))}
-
-            {/* Refresh */}
-            {reTrigger && (
-              <button
-                onClick={changeKey}
-                disabled={isLoading}
-                className={cn(
-                  "p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground",
-                  isLoading && "animate-spin",
-                )}
-                title="Refresh component"
-              >
-                <RotateCw size={16} />
-              </button>
-            )}
-
-            {/* More Actions */}
-            <div className="flex items-center gap-1 border-l pl-2 ml-1">
-              {componentName && (
-                <>
-                  <button
-                    onClick={handleShare}
-                    className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
-                    title="Share component"
-                  >
-                    <Share size={16} />
-                  </button>
-                  <button
-                    onClick={handleDownload}
-                    className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
-                    title="Download component"
-                  >
-                    <Download size={16} />
-                  </button>
-                  <button
-                    onClick={handleNewPage}
-                    className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
-                    title="Open in new page"
-                  >
-                    <ExternalLink size={16} />
-                  </button>
-                </>
+        <div className="flex items-center gap-2">
+          {/* Device viewport buttons */}
+          <div className="flex items-center rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden">
+            <button
+              onClick={setDesktop}
+              className={cn(
+                "p-2 border-r border-zinc-200 dark:border-zinc-700 transition-colors",
+                isDesktop
+                  ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
+                  : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
               )}
-
-              {allowFullscreen && (
-                <button
-                  onClick={handleFullPage}
-                  className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
-                  title="Toggle fullscreen"
-                >
-                  {isFullPage ? <Minimize2 size={16} /> : <Expand size={16} />}
-                </button>
+              title="Desktop view"
+            >
+              <MonitorIcon size={18} />
+            </button>
+            <button
+              onClick={setTablet}
+              className={cn(
+                "p-2 border-r border-zinc-200 dark:border-zinc-700 transition-colors",
+                isTablet
+                  ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
+                  : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
               )}
-
-              <button
-                onClick={() => setShowControls(!showControls)}
-                className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground lg:hidden"
-                title="Toggle controls"
-              >
-                {showControls ? <EyeOff size={16} /> : <Eye size={16} />}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="flex h-full">
-        {/* Preview Area */}
-        <div
-          className={cn(
-            "flex-1 flex items-center justify-center relative overflow-auto",
-            currentBg,
-            theme === "dark" && "dark",
-            isFullPage ? "min-h-screen" : "min-h-[350px]",
-          )}
-          style={{
-            ...(viewport !== "fullscreen" && {
-              maxWidth: currentSize.width,
-              maxHeight: currentSize.height,
-              margin: "0 auto",
-            }),
-          }}
-        >
-          <div
-            ref={previewRef}
-            className={cn(
-              "w-full h-full flex items-center justify-center transition-transform duration-200",
-              viewport !== "fullscreen" &&
-                "max-w-full max-h-full overflow-auto",
-              isLoading && "opacity-50",
-            )}
-            style={{
-              transform: enableZoom ? `scale(${zoom / 100})` : undefined,
-              transformOrigin: "center center",
-            }}
-          >
-            {reTrigger ? cloneElement(component, { key }) : component}
+              title="Tablet view"
+            >
+              <TabletIcon size={18} />
+            </button>
+            <button
+              onClick={setMobile}
+              className={cn(
+                "p-2 transition-colors",
+                isMobile
+                  ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
+                  : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
+              )}
+              title="Mobile view"
+            >
+              <SmartphoneIcon size={18} />
+            </button>
           </div>
 
-          {/* Loading Overlay */}
-          {isLoading && (
-            <div className="absolute inset-0 bg-background/20 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            </div>
+          {/* Refresh button */}
+          {reTrigger && (
+            <button
+              onClick={changeKey}
+              disabled={isLoading}
+              className={cn(
+                "p-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-sm transition-colors",
+                "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
+                isLoading && "animate-spin",
+              )}
+              title="Refresh component"
+            >
+              <RotateCcwIcon size={18} />
+            </button>
           )}
         </div>
       </div>
 
-      {/* Keyboard Shortcuts Help */}
-      {isFullPage && (
-        <div className="absolute bottom-4 right-4 bg-popover border rounded-md shadow-lg p-3 text-xs space-y-1 opacity-80 hover:opacity-100 transition-opacity">
-          <div className="font-medium mb-2">Shortcuts</div>
-          <div>⌘+R - Refresh</div>
-          <div>⌘+F - Fullscreen</div>
-          {enableZoom && (
-            <>
-              <div>⌘+/⌘- - Zoom</div>
-              <div>⌘+0 - Reset Zoom</div>
-            </>
+      {/* Main preview area */}
+      <div ref={containerRef} className="relative w-full min-h-[350px]">
+        {/* Outer canvas with dashed grid background */}
+        <div
+          className="absolute inset-0 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M32 0v32M0 32h32' fill='none' stroke='%23e5e7eb' stroke-dasharray='4 4'/%3e%3c/svg%3e")`,
+          }}
+        />
+
+        {/* Resizable inner panel */}
+        <div
+          className={cn(
+            "absolute left-0 top-0 h-full bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 shadow-[4px_0_16px_rgba(0,0,0,0.03)] dark:shadow-[4px_0_16px_rgba(0,0,0,0.2)] overflow-hidden rounded-l-2xl",
+            !isDraggingState && "transition-[width] duration-300 ease-in-out",
+          )}
+          style={{ width: width !== null ? `${width}px` : "100%" }}
+        >
+          {/* Component render area */}
+          <div
+            className={cn(
+              "w-full h-full flex items-center justify-center min-h-[350px] p-6",
+              isLoading && "opacity-50",
+            )}
+          >
+            {reTrigger ? cloneElement(component, { key }) : component}
+          </div>
+
+          {/* Loading overlay */}
+          {isLoading && (
+            <div className="absolute inset-0 bg-white/20 dark:bg-black/20 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-800 dark:border-zinc-200" />
+            </div>
+          )}
+
+          {/* Width indicator */}
+          {width !== null && (
+            <div className="absolute bottom-3 left-0 w-full text-center text-[13px] text-zinc-400 dark:text-zinc-500 font-medium select-none pointer-events-none">
+              {Math.round(width)}px
+            </div>
           )}
         </div>
-      )}
+
+        {/* Resize drag handle */}
+        {width !== null && (
+          <div
+            className={cn(
+              "absolute top-1/2 -translate-y-1/2 w-5 h-10 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-md shadow-sm flex items-center justify-center cursor-ew-resize z-20",
+              "text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-500",
+              !isDraggingState && "transition-all duration-300 ease-in-out",
+              isDraggingState && "transition-colors",
+            )}
+            style={{ left: `calc(${width}px - 10px)` }}
+            onPointerDown={onPointerDown}
+            title="Drag to resize"
+          >
+            <GripVerticalIcon size={14} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

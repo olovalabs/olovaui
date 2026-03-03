@@ -22,7 +22,7 @@ const SearchModal = dynamic(
 );
 import SupportAlertBanner from "./support-alert-banner";
 
-const GitHubStarBadge = ({ repo }: { repo: string }) => {
+const GitHubStarBadge = ({ repo: _repo }: { repo: string }) => {
   // Using a static placeholder value for static export
   // This value should be updated via build-time script
   const staticStars = 0; // This will be replaced with actual star count during build
@@ -78,16 +78,14 @@ const Header = () => {
     <>
       <SupportAlertBanner />
       <div
-        className={`fixed inset-0 z-30 bg-black/50 transition-opacity duration-200 md:hidden ${
-          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-30 bg-black/50 transition-opacity duration-200 md:hidden ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         onClick={() => setSidebarOpen(false)}
       />
 
       <div
-        className={`fixed top-0 left-0 z-40 h-full w-4/5 bg-zinc-50 dark:bg-zinc-950 md:hidden transition-transform duration-200 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 z-40 h-full w-4/5 bg-zinc-50 dark:bg-zinc-950 md:hidden transition-transform duration-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="w-full px-6 py-4 flex items-center justify-between border-b border-gray-200 dark:border-zinc-800">
           <Link href="/" className="flex items-center">
