@@ -26,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <MetaTags />
+        <meta name="google-site-verification" content="A4XbFNsC1916zjxsmhpEfyc1VYQsV33iFDki7EcCA4o" />
         <ResourcePreloader />
       </head>
       <body
