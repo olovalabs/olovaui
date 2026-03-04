@@ -1,27 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useSyncExternalStore, useCallback } from "react";
 import Link from "next/link";
 import { X, Heart } from "lucide-react";
 
-const SupportAlertBanner = () => {
-  const [isVisible, setIsVisible] = useState(() => {
-    if (typeof window !== "undefined") {
-      const dismissed = localStorage.getItem(
-        "olova-ui-support-banner-dismissed",
-      );
-      return !dismissed;
-    }
-    return true;
-  });
+const BANNER_STORAGE_KEY = "olova-ui-support-banner-dismissed";
 
-  const handleClose = () => {
-    setIsVisible(false);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("olova-ui-support-banner-dismissed", "true");
-    }
+// Custom store for banner dismissed state
+let listeners: Array<() => void> = [];
+function emitChange() {
+  for (const listener of listeners) listener();
+}
+function subscribeBanner(callback: () => void) {
+  listeners = [...listeners, callback];
+  return () => {
+    listeners = listeners.filter((l) => l !== callback);
   };
+}
+function getIsDismissed() {
+  return !!localStorage.getItem(BANNER_STORAGE_KEY);
+}
+// Server snapshot always returns true (dismissed) to avoid rendering on server
+function getServerIsDismissed() {
+  return true;
+}
 
-  if (!isVisible) return null;
+const SupportAlertBanner = () => {
+  const isDismissed = useSyncExternalStore(subscribeBanner, getIsDismissed, getServerIsDismissed);
+
+  const handleClose = useCallback(() => {
+    localStorage.setItem(BANNER_STORAGE_KEY, "true");
+    emitChange();
+  }, []);
+
+  if (isDismissed) return null;
 
   return (
     <>

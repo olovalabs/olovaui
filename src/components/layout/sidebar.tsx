@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useSyncExternalStore } from "react";
 
 const useCurrentPath = () => {
   const pathname = usePathname();
@@ -16,29 +16,55 @@ const useCurrentPath = () => {
   return normalizedPathname;
 };
 
-// Persistent state hook
+// Module-level listener management for persisted state
+const storageListeners = new Map<string, Set<() => void>>();
+
+function getStorageListeners(key: string) {
+  if (!storageListeners.has(key)) {
+    storageListeners.set(key, new Set());
+  }
+  return storageListeners.get(key)!;
+}
+
+// Persistent state hook using useSyncExternalStore — avoids hydration mismatch
+// and satisfies both react-hooks/set-state-in-effect and react-hooks/refs rules.
 const usePersistedState = <T,>(
   key: string,
   defaultValue: T,
 ): [T, (value: T) => void] => {
-  const [state, setState] = useState<T>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = localStorage.getItem(key);
-        return saved ? JSON.parse(saved) : defaultValue;
-      } catch {
-        return defaultValue;
-      }
-    }
-    return defaultValue;
-  });
+  const serializedDefault = JSON.stringify(defaultValue);
 
-  const setValue = (value: T) => {
-    setState(value);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(key, JSON.stringify(value));
+  const subscribe = useCallback((callback: () => void) => {
+    const listeners = getStorageListeners(key);
+    listeners.add(callback);
+    return () => {
+      listeners.delete(callback);
+    };
+  }, [key]);
+
+  const getSnapshot = useCallback(() => {
+    try {
+      const saved = localStorage.getItem(key);
+      return saved ?? serializedDefault;
+    } catch {
+      return serializedDefault;
     }
-  };
+  }, [key, serializedDefault]);
+
+  const getServerSnapshot = useCallback(() => {
+    return serializedDefault;
+  }, [serializedDefault]);
+
+  const raw = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const state: T = useMemo(() => {
+    try { return JSON.parse(raw); } catch { return JSON.parse(serializedDefault); }
+  }, [raw, serializedDefault]);
+
+  const setValue = useCallback((value: T) => {
+    localStorage.setItem(key, JSON.stringify(value));
+    const listeners = getStorageListeners(key);
+    for (const listener of listeners) listener();
+  }, [key]);
 
   return [state, setValue];
 };
