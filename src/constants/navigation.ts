@@ -88,6 +88,11 @@ export const navigation: NavigationItem[] = [
         href: "/docs/code-block/code-block-select",
         badge: "New",
       },
+      {
+        label: "Beam Code Block",
+        href: "/docs/code-block/beam-code-block",
+        badge: "New",
+      },
     ],
   },
   {
