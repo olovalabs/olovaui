@@ -65,11 +65,15 @@ export function ComponentRenderer({
   const [isDraggingState, setIsDraggingState] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [containerWidth, setContainerWidth] = useState(9999);
+  const [contentHeight, setContentHeight] = useState(350);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const startX = useRef(0);
   const startWidth = useRef(0);
+
+  const MIN_HEIGHT = 200;
 
   // Initialize width from container on mount and sync containerWidth
   useEffect(() => {
@@ -78,6 +82,22 @@ export function ComponentRenderer({
       setContainerWidth(w);
       setWidth(w);
     }
+  }, []);
+
+  // Observe content height changes with ResizeObserver
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const h = entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
+        setContentHeight(Math.max(MIN_HEIGHT, Math.ceil(h)));
+      }
+    });
+
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   // Re-sync on window resize
@@ -159,6 +179,9 @@ export function ComponentRenderer({
   const isTablet = width !== null && width >= 640 && width < 1024;
   const isMobile = width !== null && width < 640;
 
+  // The resolved height for the preview area (content-driven, with a floor)
+  const resolvedHeight = Math.max(MIN_HEIGHT, contentHeight);
+
   return (
     <div className={cn("w-full not-prose", className)}>
       {/* Toolbar */}
@@ -225,7 +248,11 @@ export function ComponentRenderer({
       </div>
 
       {/* Main preview area */}
-      <div ref={containerRef} className="relative w-full min-h-[350px]">
+      <div
+        ref={containerRef}
+        className="relative w-full transition-[height] duration-300 ease-in-out"
+        style={{ height: `${resolvedHeight}px` }}
+      >
         {/* Outer canvas with dashed grid background */}
         <div
           className="absolute inset-0 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden"
@@ -244,10 +271,12 @@ export function ComponentRenderer({
         >
           {/* Component render area */}
           <div
+            ref={contentRef}
             className={cn(
-              "w-full h-full flex items-center justify-center min-h-[350px] p-6",
+              "w-full flex items-center justify-center p-6",
               isLoading && "opacity-50",
             )}
+            style={{ minHeight: `${MIN_HEIGHT}px` }}
           >
             {reTrigger ? cloneElement(component, { key }) : component}
           </div>
