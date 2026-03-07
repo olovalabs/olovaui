@@ -183,68 +183,64 @@ export function ComponentRenderer({
   const resolvedHeight = Math.max(MIN_HEIGHT, contentHeight);
 
   return (
-    <div className={cn("w-full not-prose", className)}>
+    <div className={cn("relative w-full not-prose", className)}>
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-3">
-        <div />
-
-        <div className="flex items-center gap-2">
+      <div className="absolute right-0 top-[-46px] flex items-center gap-2 z-10">
+        <div className="flex items-center rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] overflow-hidden">
           {/* Device viewport buttons */}
-          <div className="flex items-center rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden">
-            <button
-              onClick={setDesktop}
-              className={cn(
-                "p-2 border-r border-zinc-200 dark:border-zinc-700 transition-colors",
-                isDesktop
-                  ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
-                  : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
-              )}
-              title="Desktop view"
-            >
-              <MonitorIcon size={18} />
-            </button>
-            <button
-              onClick={setTablet}
-              className={cn(
-                "p-2 border-r border-zinc-200 dark:border-zinc-700 transition-colors",
-                isTablet
-                  ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
-                  : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
-              )}
-              title="Tablet view"
-            >
-              <TabletIcon size={18} />
-            </button>
-            <button
-              onClick={setMobile}
-              className={cn(
-                "p-2 transition-colors",
-                isMobile
-                  ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
-                  : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
-              )}
-              title="Mobile view"
-            >
-              <SmartphoneIcon size={18} />
-            </button>
-          </div>
-
-          {/* Refresh button */}
-          {reTrigger && (
-            <button
-              onClick={changeKey}
-              disabled={isLoading}
-              className={cn(
-                "p-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-sm transition-colors",
-                "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
-                isLoading && "animate-spin",
-              )}
-              title="Refresh component"
-            >
-              <RotateCcwIcon size={18} />
-            </button>
-          )}
+          <button
+            onClick={setDesktop}
+            className={cn(
+              "p-2 border-r border-zinc-200 dark:border-zinc-700 transition-colors",
+              isDesktop
+                ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
+                : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
+            )}
+            title="Desktop view"
+          >
+            <MonitorIcon size={18} />
+          </button>
+          <button
+            onClick={setTablet}
+            className={cn(
+              "p-2 border-r border-zinc-200 dark:border-zinc-700 transition-colors",
+              isTablet
+                ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
+                : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
+            )}
+            title="Tablet view"
+          >
+            <TabletIcon size={18} />
+          </button>
+          <button
+            onClick={setMobile}
+            className={cn(
+              "p-2 transition-colors",
+              isMobile
+                ? "text-zinc-800 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-800"
+                : "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
+            )}
+            title="Mobile view"
+          >
+            <SmartphoneIcon size={18} />
+          </button>
         </div>
+
+        {/* Refresh button */}
+        {reTrigger && (
+          <button
+            onClick={changeKey}
+            disabled={isLoading}
+            className={cn(
+              "p-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-colors",
+              "text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300",
+              isLoading && "animate-spin",
+            )}
+            title="Refresh component"
+          >
+            <RotateCcwIcon size={18} />
+          </button>
+        )}
       </div>
 
       {/* Main preview area */}
