@@ -8,29 +8,28 @@ A smooth blur-in animation that reveals text with a customizable blur effect and
     } reTrigger={true} />
   code
 
-
 ## Basic Usage
 
 Import and use the BlurText component with customizable animation properties. Control the blur direction, animation speed, and whether to animate by characters or words.
 
 ```tsx
-"use client"
+"use client";
 
 
 export function BlurTextView() {
-    return (
-      <div className='text-center'>
-       <BlurText
-       delay={150}
-       animateBy="words"
-       direction="top"
-       onAnimationComplete={() => console.log('Done!')}
-       className="text-2xl md:text-6xl mb-8"
-       >
-       Love This UI?
-       </BlurText>
-      </div>
-    );
+  return (
+    <div className="text-center">
+      <BlurText
+        delay={150}
+        animateBy="words"
+        direction="top"
+        onAnimationComplete={() => {}}
+        className="text-2xl md:text-6xl mb-8"
+      >
+        Love This UI?
+      </BlurText>
+    </div>
+  );
 }
 ```
 
@@ -41,20 +40,19 @@ Create your own animation effects by defining custom animation snapshots. Combin
 ```tsx
 
 const customAnimation: AnimationSnapshot = {
-  filter: 'blur(20px)',
+  filter: "blur(20px)",
   opacity: 0,
-  scale: 0.8
+  scale: 0.8,
 };
 
 <BlurText
   delay={150}
   animateBy="words"
   direction="top"
-  onAnimationComplete={() => console.log('Done!')}
+  onAnimationComplete={() => {}}
   className="text-2xl mb-8"
   animationFrom={customAnimation}
 >
   Hello world
-</BlurText>
-
+</BlurText>;
 ```

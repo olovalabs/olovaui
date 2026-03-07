@@ -13,16 +13,16 @@ A bouncy pop-in animation that reveals text with a spring effect. Characters or 
 Import and use the PopIn component with customizable animation properties.
 
 ```tsx
-"use client"
+"use client";
 
 
 export function PopInView() {
   return (
-    <div className='text-center'>
+    <div className="text-center">
       <PopIn
         delay={100}
         animateBy="words"
-        onAnimationComplete={() => console.log('Done!')}
+        onAnimationComplete={() => {}}
         className="text-2xl md:text-6xl mb-8"
       >
         Pop In Animation

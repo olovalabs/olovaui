@@ -69,6 +69,11 @@ export const navigation: NavigationItem[] = [
         href: "/docs/slider/focus-cards",
         badge: "New",
       },
+      {
+        label: "Video Accordion",
+        href: "/docs/slider/video-accordion",
+        badge: "New",
+      },
     ],
   },
   {
@@ -111,6 +116,11 @@ export const navigation: NavigationItem[] = [
       {
         label: "Hero Video Player",
         href: "/docs/hero-video-player",
+        badge: "New",
+      },
+      {
+        label: "Network Graph",
+        href: "/docs/network-graph",
         badge: "New",
       },
     ],
