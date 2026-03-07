@@ -16,7 +16,6 @@ export const navigation: NavigationItem[] = [
       {
         label: "Installation",
         href: "/docs/installation",
-        badge: "Updated",
       },
     ],
   },
@@ -26,7 +25,6 @@ export const navigation: NavigationItem[] = [
       {
         label: "Flip Link",
         href: "/docs/text/flip-link",
-        badge: "New",
       },
       {
         label: "Slide In View",
@@ -39,7 +37,6 @@ export const navigation: NavigationItem[] = [
       {
         label: "Rolling Letters",
         href: "/docs/text/rolling-letters",
-        badge: "New",
       },
     ],
   },
@@ -49,12 +46,10 @@ export const navigation: NavigationItem[] = [
       {
         label: "3D Carousel",
         href: "/docs/slider/3d-carousel",
-        badge: "New",
       },
       {
         label: "Rotating Cards",
         href: "/docs/slider/rotating-cards",
-        badge: "New",
       },
       {
         label: "Memories Card",
@@ -67,12 +62,10 @@ export const navigation: NavigationItem[] = [
       {
         label: "Focus Cards",
         href: "/docs/slider/focus-cards",
-        badge: "New",
       },
       {
         label: "Video Accordion",
         href: "/docs/slider/video-accordion",
-        badge: "New",
       },
     ],
   },
@@ -82,7 +75,6 @@ export const navigation: NavigationItem[] = [
       {
         label: "Code Block Simple",
         href: "/docs/code-block/code-block-simple",
-        badge: "New",
       },
       {
         label: "Code Block Natural",
@@ -91,12 +83,10 @@ export const navigation: NavigationItem[] = [
       {
         label: "Code Block Select",
         href: "/docs/code-block/code-block-select",
-        badge: "New",
       },
       {
         label: "Beam Code Block",
         href: "/docs/code-block/beam-code-block",
-        badge: "New",
       },
     ],
   },
@@ -106,22 +96,18 @@ export const navigation: NavigationItem[] = [
       {
         label: "Border Beam",
         href: "/docs/border-beam",
-        badge: "New",
       },
       {
         label: "Shine Border",
         href: "/docs/shine-border",
-        badge: "New",
       },
       {
         label: "Hero Video Player",
         href: "/docs/hero-video-player",
-        badge: "New",
       },
       {
         label: "Network Graph",
         href: "/docs/network-graph",
-        badge: "New",
       },
     ],
   },
