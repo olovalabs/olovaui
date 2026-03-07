@@ -186,6 +186,12 @@ export function ComponentRenderer({
     <div className={cn("relative w-full not-prose", className)}>
       {/* Toolbar */}
       <div className="absolute right-0 top-[-46px] flex items-center gap-2 z-10">
+        {/* Width indicator */}
+        {width !== null && (
+          <div className="text-[13px] font-medium text-zinc-400 dark:text-zinc-500 mr-2 flex items-center select-none pointer-events-none">
+            {Math.round(width)}px
+          </div>
+        )}
         <div className="flex items-center rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] overflow-hidden">
           {/* Device viewport buttons */}
           <button
@@ -281,13 +287,6 @@ export function ComponentRenderer({
           {isLoading && (
             <div className="absolute inset-0 bg-white/20 dark:bg-black/20 flex items-center justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-800 dark:border-zinc-200" />
-            </div>
-          )}
-
-          {/* Width indicator */}
-          {width !== null && (
-            <div className="absolute bottom-3 left-0 w-full text-center text-[13px] text-zinc-400 dark:text-zinc-500 font-medium select-none pointer-events-none">
-              {Math.round(width)}px
             </div>
           )}
         </div>
