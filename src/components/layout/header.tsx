@@ -109,10 +109,10 @@ const Header = () => {
         ) : null}
       </div>
 
-      <div className="w-full mx-auto max-w-[1536px] sticky top-0 z-[9998] bg-transparent backdrop-blur-lg border-b border-gray-200 dark:border-zinc-800 border-l border-r border-neutral-200 px-6">
-        <header className="h-14 px-4 md:px-0 flex items-center justify-between">
-          <div className="flex items-center gap-12">
-            <div className="flex items-center gap-4">
+      <div className="w-full mx-auto max-w-[1536px] sticky top-0 z-[9998] bg-transparent backdrop-blur-lg border-b border-gray-200 dark:border-zinc-800 border-l border-r border-neutral-200 px-4 md:px-5">
+        <header className="h-14 flex items-center justify-between">
+          <div className="flex items-center gap-8 md:gap-10">
+            <div className="flex items-center gap-3">
               {
                 <button
                   onClick={toggleSidebar}
@@ -137,7 +137,7 @@ const Header = () => {
                 </div>
               </Link>
             </div>
-            <nav className=" hidden md:flex items-center gap-6 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+            <nav className=" hidden md:flex items-center gap-5 text-sm font-medium text-zinc-800 dark:text-zinc-200">
               <Link
                 className="hover:text-zinc-900 dark:hover:text-zinc-50"
                 href="/docs"
@@ -152,7 +152,7 @@ const Header = () => {
               </Link>
             </nav>
           </div>
-          <nav className="flex items-center space-x-3">
+          <nav className="flex items-center gap-2 md:gap-3">
             <button
               onClick={() => setSearchOpen(true)}
               className="flex items-center justify-between gap-3 px-3 py-2 h-9 rounded-md bg-zinc-100/80 dark:bg-zinc-900/80 border border-zinc-300/50 dark:border-zinc-800 hover:bg-zinc-200/80 dark:hover:bg-zinc-800/80 transition-all duration-200 text-left md:min-w-[280px] cursor-pointer backdrop-blur-sm"
@@ -209,3 +209,4 @@ const Header = () => {
 };
 
 export default Header;
+
