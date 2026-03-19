@@ -6,51 +6,50 @@ const BASE_CARDS: RotatingCard[] = [
     {
       id: 1,
       content: "1",
-      img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
+      img: "https://i.pinimg.com/1200x/5a/b9/94/5ab9944f849c62246e92e378cb91ab76.jpg",
     },
     {
       id: 2,
       content: "2",
-      img: "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=800&auto=format&fit=crop",
+      img: "https://i.pinimg.com/736x/57/5a/ed/575aedeba6783f7ee729ffb27fb708aa.jpg",
     },
     {
       id: 3,
       content: "3",
-      img: "https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=800&auto=format&fit=crop",
+      img: "https://i.pinimg.com/736x/53/ae/15/53ae15903bc6e5a41bbea4d4efbd756f.jpg",
     },
     {
       id: 4,
       content: "4",
-      img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=800&auto=format&fit=crop",
+      img: "https://i.pinimg.com/736x/0a/ab/0e/0aab0ed4233a107b7f2aa2e5ad00b245.jpg",
     },
     {
       id: 5,
       content: "5",
-      img: "https://images.unsplash.com/photo-1536697246787-1f27d39d4b96?q=80&w=800&auto=format&fit=crop",
+      img: "https://i.pinimg.com/736x/9e/42/54/9e42540b1bbe9da6af27ee861978c0ea.jpg",
     },
     {
       id: 6,
       content: "6",
-      img: "https://images.unsplash.com/photo-1505909182942-e2f09aee3e89?q=80&w=800&auto=format&fit=crop",
+      img: "https://i.pinimg.com/736x/a7/93/0b/a7930b2a627a670df3ce977998733d7a.jpg",
     },
     {
       id: 7,
       content: "7",
-      img: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=800&auto=format&fit=crop",
+      img: "https://i.pinimg.com/736x/79/a7/ab/79a7ab00ac9157b93b45486c83a847d9.jpg",
     },
     {
       id: 8,
       content: "8",
-      background: "linear-gradient(135deg, #111 0%, #333 100%)",
+      img: "https://i.pinimg.com/736x/14/60/a3/1460a32885d108cff097cffeb3a8f352.jpg",
     },
     {
       id: 9,
       content: "9",
-      img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=800&auto=format&fit=crop",
+      img: "https://i.pinimg.com/736x/77/4b/92/774b9270b231fbe3db6ffc7c4162bd6e.jpg",
     },
 ];
 
-// Tripling the cards to fill the radius and decrease gaps
 const CARDS_DATA: RotatingCard[] = [
     ...BASE_CARDS,
     ...BASE_CARDS.map((c) => ({
