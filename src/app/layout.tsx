@@ -23,7 +23,7 @@ export default function RootLayout({
         <ResourcePreloader />
       </head>
       <body
-        className={`${geistMono.className} ${geistMono.variable} ${geistSans.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-normal`}
+        className={`${geistSans.className} ${geistMono.variable} ${geistSans.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-normal`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
           <PackageManagerProvider>
