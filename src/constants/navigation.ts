@@ -60,6 +60,10 @@ export const navigation: NavigationItem[] = [
         href: "/docs/slider/photo-slider",
       },
       {
+        label: "Moody Carousel",
+        href: "/docs/slider/moody-carousel",
+      },
+      {
         label: "Focus Cards",
         href: "/docs/slider/focus-cards",
       },
