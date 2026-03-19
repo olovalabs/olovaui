@@ -2,19 +2,12 @@ import './globals.css';
 import { ThemeProvider } from 'next-themes';
 import { geistMono, geistSans } from '@/assets/fonts';
 import { PackageManagerProvider } from '@/context/package-manager-context';
-import { Inter } from 'next/font/google';
 import { ResourcePreloader } from '@/components/performance/resource-preloader';
 import '@/components/performance/critical.css';
 import { MetaTags } from '@/components/seo/meta-tags';
 import { metadata } from '@/lib/metadata';
 import { OrganizationJsonLd, WebSiteJsonLd, SoftwareApplicationJsonLd } from '@/components/seo/json-ld';
 import ClientShell from '@/components/performance/client-shell';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-});
 
 export { metadata };
 export default function RootLayout({
@@ -30,7 +23,7 @@ export default function RootLayout({
         <ResourcePreloader />
       </head>
       <body
-        className={`${inter.className} ${geistMono.variable} ${geistSans.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100`}
+        className={`${geistSans.className} ${geistMono.variable} ${geistSans.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-normal`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
           <PackageManagerProvider>

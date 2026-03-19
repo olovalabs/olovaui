@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { PackageManagerProvider } from "@/context/package-manager-context";
 import "@/app/globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const geistSans = Geist({
+  weight: "400",
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
@@ -23,7 +23,7 @@ export default function StandaloneLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${inter.className} ${geistMono.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100`}
+        className={`${geistSans.className} ${geistSans.variable} antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-normal`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
           <PackageManagerProvider>{children}</PackageManagerProvider>
