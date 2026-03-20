@@ -44,7 +44,7 @@ export const navigation: NavigationItem[] = [
       },
     ],
   },
-   {
+  {
     label: "Components",
     children: [
       {
@@ -66,6 +66,10 @@ export const navigation: NavigationItem[] = [
       {
         label: "Glow Card",
         href: "/docs/glow-card",
+      },
+      {
+        label: "Code Block",
+        href: "/docs/code-block",
       },
     ],
   },
@@ -99,27 +103,6 @@ export const navigation: NavigationItem[] = [
       {
         label: "Video Accordion",
         href: "/docs/slider/video-accordion",
-      },
-    ],
-  },
-  {
-    label: "Code Block",
-    children: [
-      {
-        label: "Code Block Simple",
-        href: "/docs/code-block/code-block-simple",
-      },
-      {
-        label: "Code Block Natural",
-        href: "/docs/code-block/code-block-natural",
-      },
-      {
-        label: "Code Block Select",
-        href: "/docs/code-block/code-block-select",
-      },
-      {
-        label: "Beam Code Block",
-        href: "/docs/code-block/beam-code-block",
       },
     ],
   },
