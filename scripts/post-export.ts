@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
+import { spawnSync } from 'child_process';
 import Critters from 'critters';
 
 const readFile = promisify(fs.readFile);
@@ -46,6 +47,32 @@ async function main() {
   }
   console.warn('Inlining critical CSS with Critters...');
   await inlineCriticalCSS();
+  console.warn('Building Pagefind search index...');
+  const pagefindBinary = path.join(
+    process.cwd(),
+    'node_modules',
+    '.bin',
+    process.platform === 'win32' ? 'pagefind.cmd' : 'pagefind'
+  );
+
+  if (!fs.existsSync(pagefindBinary)) {
+    console.warn('Pagefind binary not found; skip search indexing');
+    return;
+  }
+
+  const result =
+    process.platform === 'win32'
+      ? spawnSync('cmd.exe', ['/c', pagefindBinary, '--site', OUT_DIR], {
+          stdio: 'inherit',
+        })
+      : spawnSync(pagefindBinary, ['--site', OUT_DIR], {
+          stdio: 'inherit',
+        });
+
+  if (result.status !== 0) {
+    throw new Error(`Pagefind indexing failed with exit code ${result.status ?? 'unknown'}`);
+  }
+
   console.warn('Post-export optimizations complete');
 }
 
