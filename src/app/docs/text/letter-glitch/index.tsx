@@ -28,8 +28,6 @@ export function LetterGlitchView() {
   }, []);
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div>
         <div className="space-y-1">
           {lines.map((line, index) => (
             <div key={line.text}>
@@ -47,8 +45,6 @@ export function LetterGlitchView() {
             </div>
           ))}
         </div>
-      </div>
-    </div>
   );
 }
 
