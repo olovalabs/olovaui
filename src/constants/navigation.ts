@@ -38,6 +38,10 @@ export const navigation: NavigationItem[] = [
         label: "Rolling Letters",
         href: "/docs/text/rolling-letters",
       },
+      {
+        label: "Letter Glitch",
+        href: "/docs/text/letter-glitch",
+      },
     ],
   },
    {
