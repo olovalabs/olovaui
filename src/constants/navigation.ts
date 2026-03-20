@@ -40,6 +40,31 @@ export const navigation: NavigationItem[] = [
       },
     ],
   },
+   {
+    label: "Components",
+    children: [
+      {
+        label: "Border Beam",
+        href: "/docs/border-beam",
+      },
+      {
+        label: "Shine Border",
+        href: "/docs/shine-border",
+      },
+      {
+        label: "Hero Video Player",
+        href: "/docs/hero-video-player",
+      },
+      {
+        label: "Network Graph",
+        href: "/docs/network-graph",
+      },
+      {
+        label: "Glow Card",
+        href: "/docs/glow-card",
+      },
+    ],
+  },
   {
     label: "Slider",
     children: [
@@ -91,27 +116,6 @@ export const navigation: NavigationItem[] = [
       {
         label: "Beam Code Block",
         href: "/docs/code-block/beam-code-block",
-      },
-    ],
-  },
-  {
-    label: "Effects",
-    children: [
-      {
-        label: "Border Beam",
-        href: "/docs/border-beam",
-      },
-      {
-        label: "Shine Border",
-        href: "/docs/shine-border",
-      },
-      {
-        label: "Hero Video Player",
-        href: "/docs/hero-video-player",
-      },
-      {
-        label: "Network Graph",
-        href: "/docs/network-graph",
       },
     ],
   },
