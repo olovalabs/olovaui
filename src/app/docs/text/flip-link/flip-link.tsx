@@ -1,13 +1,11 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 
 export interface FlipLinkProps {
   children: string;
   href?: string;
   hoverColor?: string;
-  /** Custom Tailwind font size classes (e.g., "text-2xl", "text-4xl") */
   fontSize?: string;
   className?: string;
   duration?: number;
