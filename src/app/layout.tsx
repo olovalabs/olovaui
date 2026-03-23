@@ -19,6 +19,17 @@ export default function RootLayout({
       <head>
         <MetaTags />
         <meta name="google-site-verification" content="A4XbFNsC1916zjxsmhpEfyc1VYQsV33iFDki7EcCA4o" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3B6SP4PBXQ"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-3B6SP4PBXQ');
+            `,
+          }}
+        />
         <ResourcePreloader />
       </head>
       <body
