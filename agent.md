@@ -162,7 +162,7 @@ Components are distributed via a registry system compatible with shadcn/ui CLI:
 
 ```bash
 # Users can add components via:
-pnpm dlx shadcn@latest add "https://olovaui.olova.net/registry/button.json"
+pnpm dlx shadcn@latest add "https://olovaui.olova.dev/registry/button.json"
 ```
 
 ### Registry Item Schema
@@ -409,10 +409,10 @@ pnpm commit           # Interactive commit wizard
 
 ## Links
 
-- **Documentation:** https://olovaui.olova.net/docs
-- **Live Site:** https://olovaui.olova.net
+- **Documentation:** https://olovaui.olova.dev/docs
+- **Live Site:** https://olovaui.olova.dev
 - **GitHub:** https://github.com/olovalabs/olovaui
-- **Sponsor:** https://olovaui.olova.net/sponsor
+- **Sponsor:** https://olovaui.olova.dev/sponsor
 
 ---
 
