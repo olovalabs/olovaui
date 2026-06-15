@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils";
-
 export default function TablePreview() {
   return (
     <div className="w-full max-w-[240px] rounded-lg border border-border">
