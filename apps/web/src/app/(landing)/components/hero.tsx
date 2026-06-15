@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export const Hero = () => {
   return (
-    <div className="relative isolate min-h-[80vh] w-full flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white px-4 py-20">
+    <div className="relative isolate min-h-[80vh] w-full flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white px-4 py-10">
       {/* Top Badge */}
       <div className="mb-8 animate-fade-in-up">
         <Link
@@ -21,17 +21,28 @@ export const Hero = () => {
         </Link>
       </div>
 
-      {/* Hero Title */}
-      <div className="max-w-4xl mx-auto text-center space-y-4 mb-8">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-neutral-900 dark:text-white">
-          <span className="block">Beautiful</span>
-          <span className="inline-flex items-center gap-2 flex-wrap justify-center">
-            Pre-built UI Library
-          </span>
-          <br />
-          for Busy & Smart devs.
-        </h1>
-      </div>
+<div className="max-w-4xl mx-auto text-center space-y-4 mb-8">
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-neutral-900 dark:text-white">
+
+        {/* Line 1 */}
+        <span className="hero-fade-up block [animation-delay:0ms]">
+          <span className="title-sweep title-sweep-1">Beautiful</span>
+        </span>
+
+        {/* Line 2 */}
+        <span className="hero-fade-up inline-flex items-center gap-2 flex-wrap justify-center [animation-delay:150ms]">
+          <span className="title-sweep title-sweep-2">Pre-built UI Library</span>
+        </span>
+
+        <br />
+
+        {/* Line 3 */}
+        <span className="hero-fade-up block [animation-delay:300ms]">
+          <span className="title-sweep title-sweep-3">for Busy & Smart devs.</span>
+        </span>
+
+      </h1>
+    </div>
 
       {/* Description */}
       <p className="max-w-2xl mx-auto text-center text-lg text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
