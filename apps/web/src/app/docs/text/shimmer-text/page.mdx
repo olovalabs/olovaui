@@ -1,0 +1,96 @@
+export const metadata = {
+  title: "Shimmer Text - Olova UI",
+  description:
+    "Continuous gradient marquee animation across text with configurable colors, speed, and angle.",
+  keywords: [
+    "shimmer text",
+    "gradient text animation",
+    "marquee text effect",
+    "react text animation",
+    "olova ui",
+  ],
+  openGraph: {
+    title: "Shimmer Text - Olova UI",
+    description:
+      "Smooth gradient marquee that sweeps across text. Choose colors, speed, angle, and pause on hover.",
+    type: "article",
+    url: "/docs/text/shimmer-text",
+  },
+  alternates: {
+    canonical: "/docs/text/shimmer-text",
+  },
+};
+
+import { ShimmerTextView } from "./index.tsx";
+
+# Shimmer Text
+
+Shimmer Text applies a continuously moving gradient across text with full control over the color palette, sweep speed, gradient angle, and hover behavior. Built on `requestAnimationFrame` for smooth 60 fps animation.
+
+<Tabs defaultValue="preview" className="">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <ComponentRenderer component={<ShimmerTextView />} reTrigger={true} />
+  </TabsContent>
+  <TabsContent value="code">
+    <CodeBlock filePath="src/components/ui/shimmer-text.tsx" />
+  </TabsContent>
+</Tabs>
+
+## Basic Usage
+
+```tsx
+import { ShimmerText } from "@/components/ui/shimmer-text";
+
+export function Example() {
+  return (
+    <ShimmerText
+      text="Fluid motion in every pixel"
+      colors={["#6366f1", "#8b5cf6", "#d946ef", "#f43f5e"]}
+    />
+  );
+}
+```
+
+## Props
+
+| Prop            | Type                                                   | Default                                                       | Description                                   |
+| :-------------- | :----------------------------------------------------- | :------------------------------------------------------------ | :-------------------------------------------- |
+| `text`          | `string`                                               | required                                                      | Text content.                                 |
+| `className`     | `string`                                               | `""`                                                          | Additional CSS classes.                       |
+| `colors`        | `[string, ...string[]]`                                | Indigo→Rose gradient                                          | At least 2 colors for gradient stops.         |
+| `cycleDuration` | `number`                                               | `4`                                                           | Full-cycle duration in seconds.               |
+| `angle`         | `number`                                               | `90`                                                          | Gradient angle in degrees.                    |
+| `pauseOnHover`  | `boolean`                                              | `true`                                                        | Pauses animation while hovered.               |
+| `as`            | `"span" \| "p" \| "h1" \| ...`                        | `"span"`                                                      | HTML element.                                 |
+| `fontSize`      | `string`                                               | —                                                             | Inline font-size override.                    |
+| `fontWeight`    | `string`                                               | —                                                             | Inline font-weight override.                  |
+| `seamless`      | `boolean`                                              | `false`                                                       | Marquee runs without resetting.               |
+
+## Customizing Colors
+
+```tsx
+<ShimmerText
+  text="Emerald to Amber"
+  colors={["#10b981", "#14b8a6", "#f59e0b", "#f97316"]}
+  cycleDuration={3}
+/>
+```
+
+## Slow Vertical Sweep
+
+```tsx
+<ShimmerText
+  text="Slow vertical shimmer"
+  angle={180}
+  cycleDuration={8}
+  colors={["#0ea5e9", "#6366f1"]}
+/>
+```
+
+## Accessibility
+
+When `prefers-reduced-motion` is active, ShimmerText renders as plain text without any animation. The component includes an `aria-label` for screen readers.

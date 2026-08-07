@@ -1,0 +1,93 @@
+export const metadata = {
+  title: "Reveal Text - Olova UI",
+  description:
+    "Split-text character reveal animation with staggered timing, configurable direction, and easing curves.",
+  keywords: [
+    "reveal text",
+    "split text animation",
+    "staggered character fade-in",
+    "framer motion text effect",
+    "react text animation",
+    "olova ui",
+  ],
+  openGraph: {
+    title: "Reveal Text - Olova UI",
+    description:
+      "Staggered character reveal — each letter slides in with a configurable delay, direction, and easing.",
+    type: "article",
+    url: "/docs/text/reveal-text",
+  },
+  alternates: {
+    canonical: "/docs/text/reveal-text",
+  },
+};
+
+import { RevealTextView } from "./index.tsx";
+
+# Reveal Text
+
+Reveal Text animates each character of a string independently with staggered timing. Characters slide in from a configurable direction with a smooth blur-fade entrance. Ideal for hero headlines, section titles, or any text that deserves a dramatic entrance.
+
+<Tabs defaultValue="preview" className="">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <ComponentRenderer component={<RevealTextView />} reTrigger={true} />
+  </TabsContent>
+  <TabsContent value="code">
+    <CodeBlock filePath="src/components/ui/reveal-text.tsx" />
+  </TabsContent>
+</Tabs>
+
+## Basic Usage
+
+```tsx
+import { RevealText } from "@/components/ui/reveal-text";
+
+export function Example() {
+  return (
+    <RevealText direction="up" staggerDelay={0.04}>
+      Every great design begins with a single letter.
+    </RevealText>
+  );
+}
+```
+
+## Props
+
+| Prop                  | Type                                                       | Default      | Description                                              |
+| :-------------------- | :--------------------------------------------------------- | :----------- | :------------------------------------------------------- |
+| `children`            | `string`                                                   | required     | The text content to animate.                             |
+| `direction`           | `"up" \| "down" \| "left" \| "right"`                     | `"up"`       | Direction characters slide in from.                      |
+| `staggerDelay`        | `number`                                                   | `0.03`       | Delay in seconds between each character.                 |
+| `duration`            | `number`                                                   | `0.5`        | Per-character animation duration in seconds.             |
+| `initialDelay`        | `number`                                                   | `0`          | Delay in seconds before the first character animates.    |
+| `className`           | `string`                                                   | `""`         | CSS class for the container.                             |
+| `as`                  | `"span" \| "p" \| "h1" \| "h2" \| "h3" \| "h4" \| ...`   | `"span"`     | HTML element to render.                                  |
+| `reverse`             | `boolean`                                                  | `false`      | Play the animation in reverse.                           |
+| `easing`              | `"easeIn" \| "easeOut" \| "easeInOut" \| "linear"`       | `"easeOut"`  | Framer Motion easing curve.                              |
+| `preserveWhitespace`  | `boolean`                                                  | `true`       | When true spaces use `inline` so line-wrapping works.    |
+| `onAnimationComplete` | `() => void`                                               | —            | Fires when the last character finishes animating.        |
+
+## Direction Examples
+
+```tsx
+// Slide up from below
+<RevealText direction="up">Rising up</RevealText>
+
+// Slide in from the left
+<RevealText direction="left">From the side</RevealText>
+
+// Slow, dramatic entrance
+<RevealText staggerDelay={0.12} duration={1.2}>
+  Slowly revealed
+</RevealText>
+```
+
+## Accessibility
+
+RevealText respects `prefers-reduced-motion`: when the user has reduced motion
+enabled all characters appear instantly without any animation. The component
+also includes a visually-hidden fallback for screen readers.
