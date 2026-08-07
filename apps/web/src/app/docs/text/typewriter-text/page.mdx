@@ -1,0 +1,104 @@
+export const metadata = {
+  title: "Typewriter Text - Olova UI",
+  description:
+    "Sequential typewriter effect with blinking cursor, backspace delete, multiple phrases, and loop control.",
+  keywords: [
+    "typewriter effect",
+    "typing animation",
+    "text cursor animation",
+    "react typewriter",
+    "olova ui",
+  ],
+  openGraph: {
+    title: "Typewriter Text - Olova UI",
+    description:
+      "A typewriter animation that types, pauses, and deletes phrases with a blinking cursor. Fully configurable speed and looping.",
+    type: "article",
+    url: "/docs/text/typewriter-text",
+  },
+  alternates: {
+    canonical: "/docs/text/typewriter-text",
+  },
+};
+
+import { TypewriterTextView } from "./index.tsx";
+
+# Typewriter Text
+
+Typewriter Text cycles through an array of phrases: typing each one character-by-character, pausing, deleting it, and moving to the next. Includes a blinking cursor, loop control, and callbacks for each phase.
+
+<Tabs defaultValue="preview" className="">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <ComponentRenderer component={<TypewriterTextView />} reTrigger={true} />
+  </TabsContent>
+  <TabsContent value="code">
+    <CodeBlock filePath="src/components/ui/typewriter-text.tsx" />
+  </TabsContent>
+</Tabs>
+
+## Basic Usage
+
+```tsx
+import { TypewriterText } from "@/components/ui/typewriter-text";
+
+export function Example() {
+  return (
+    <TypewriterText
+      phrases={[
+        "Build beautiful interfaces.",
+        "Ship with confidence.",
+        "Delight your users.",
+      ]}
+      typingSpeed={80}
+      pauseDuration={2000}
+      loop
+    />
+  );
+}
+```
+
+## Props
+
+| Prop               | Type                                    | Default  | Description                                     |
+| :----------------- | :-------------------------------------- | :------- | :---------------------------------------------- |
+| `phrases`          | `string[]`                              | required | Array of strings to type sequentially.          |
+| `typingSpeed`      | `number`                                | `80`     | Milliseconds per character typed.               |
+| `pauseDuration`    | `number`                                | `2000`   | Pause after typing before deleting (ms).        |
+| `deletingSpeed`    | `number`                                | `40`     | Milliseconds per character deleted.             |
+| `loop`             | `boolean`                               | `true`   | Restart from the first phrase after the last.   |
+| `showCursor`       | `boolean`                               | `true`   | Show the blinking cursor.                       |
+| `cursorChar`       | `string`                                | `"|"`    | Character used as the cursor.                   |
+| `className`        | `string`                                | `""`     | CSS class for the wrapper.                      |
+| `cursorClassName`  | `string`                                | `""`     | CSS class for the cursor span.                  |
+| `onPhraseComplete` | `(phrase: string, index: number) => void` | —      | Fires after each phrase finishes typing.       |
+| `onCycleComplete`  | `(index: number) => void`               | —        | Fires after each type+delete cycle.             |
+| `as`               | `"span" \| "p" \| "h1" \| ...`         | `"span"` | HTML element.                                   |
+
+## Custom Cursor
+
+```tsx
+<TypewriterText
+  phrases={["Hello.", "World."]}
+  cursorChar="▋"
+  cursorClassName="text-emerald-400"
+/>
+```
+
+## One-Shot (No Loop)
+
+```tsx
+<TypewriterText
+  phrases={["Reveal this message."]}
+  loop={false}
+  showCursor={false}
+  typingSpeed={60}
+/>
+```
+
+## Accessibility
+
+When `prefers-reduced-motion` is active the typewriter types instantly (0 ms per character) and the cursor does not blink. A visually-hidden fallback ensures screen readers receive the full text.

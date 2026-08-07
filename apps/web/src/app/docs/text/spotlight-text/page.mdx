@@ -1,0 +1,92 @@
+export const metadata = {
+  title: "Spotlight Text - Olova UI",
+  description:
+    "Scroll-triggered word highlight that lights up words as they cross the viewport, with manual index override.",
+  keywords: [
+    "spotlight text",
+    "scroll highlight",
+    "word highlight animation",
+    "scroll-triggered text",
+    "react text animation",
+    "olova ui",
+  ],
+  openGraph: {
+    title: "Spotlight Text - Olova UI",
+    description:
+      "Words light up as the user scrolls. Auto scroll-spy mode or manual index control with custom highlight styling.",
+    type: "article",
+    url: "/docs/text/spotlight-text",
+  },
+  alternates: {
+    canonical: "/docs/text/spotlight-text",
+  },
+};
+
+import { SpotlightTextView } from "./index.tsx";
+
+# Spotlight Text
+
+Spotlight Text highlights individual words as they enter the viewport's center region. In "auto" mode it acts as a scroll-spy: the word closest to the configured threshold gets the highlight class. You can also take manual control via the `activeIndex` prop.
+
+<Tabs defaultValue="preview" className="">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <ComponentRenderer component={<SpotlightTextView />} reTrigger={true} />
+  </TabsContent>
+  <TabsContent value="code">
+    <CodeBlock filePath="src/components/ui/spotlight-text.tsx" />
+  </TabsContent>
+</Tabs>
+
+## Basic Usage (Auto)
+
+```tsx
+import { SpotlightText } from "@/components/ui/spotlight-text";
+
+export function Example() {
+  return (
+    <SpotlightText
+      className="text-xl leading-relaxed"
+      highlightClassName="text-indigo-600 font-bold"
+      wordClassName="text-gray-400"
+    >
+      Design is not just what it looks like and feels like. Design is how it works.
+    </SpotlightText>
+  );
+}
+```
+
+## Manual Mode
+
+```tsx
+// Control which word is highlighted from your own state
+<SpotlightText
+  activeIndex={currentWord}
+  highlightClassName="text-amber-500 font-extrabold text-2xl"
+>
+  Words that stand out make a difference.
+</SpotlightText>
+```
+
+## Props
+
+| Prop                | Type                                      | Default    | Description                                          |
+| :------------------ | :---------------------------------------- | :--------- | :--------------------------------------------------- |
+| `children`          | `string`                                  | required   | The full text. Split on whitespace into words.       |
+| `className`         | `string`                                  | `""`       | CSS class for the container.                         |
+| `activeIndex`       | `number`                                  | —          | Word index to highlight. Omit for auto scroll-spy.   |
+| `highlightClassName`| `string`                                  | —          | Class applied to the active word.                   |
+| `wordClassName`     | `string`                                  | —          | Class applied to every (non-highlighted) word.       |
+| `highlightStyle`    | `React.CSSProperties`                     | —          | Inline style for the active word.                    |
+| `wordStyle`         | `React.CSSProperties`                     | —          | Inline style for non-highlighted words.              |
+| `scrollThreshold`   | `number`                                  | `0.5`      | Where in the viewport to trigger (0=top, 1=bottom).  |
+| `as`                | `"span" \| "p" \| "h1" \| ...`           | `"p"`      | HTML element.                                        |
+| `scrollRoot`        | `React.RefObject<HTMLElement>`            | `null`     | Custom scroll container ref (defaults to `window`).  |
+| `debounceMs`        | `number`                                  | `50`       | Scroll handler debounce in milliseconds.             |
+
+## Accessibility
+
+When `prefers-reduced-motion` is active, all words are rendered in the highlighted state so users still see the emphasis. The container carries an `aria-label` for screen readers.
